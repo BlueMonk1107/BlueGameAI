@@ -14,6 +14,7 @@ namespace BlueGOAPTest
         public async override void Enter()
         {
             DebugMsg.Log("进入受伤状态");
+            //模拟受伤状态的延时时间
             await Task.Delay(TimeSpan.FromSeconds(2));
             OnComplete();
         }

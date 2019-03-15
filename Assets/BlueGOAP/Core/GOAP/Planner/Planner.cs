@@ -58,6 +58,9 @@ namespace BlueGOAP
             TreeNode<TAction> topNode = _tree.CreateTopNode();
             topNode.GoalState.SetData(goal.GetEffects());
             topNode.Cost = GetCost(topNode);
+            //把GoalState中有且CurrentState没有的添加到CurrentState中
+            //数据从agent的当前状态中获取
+            topNode.CurrentState.SetKeys(_agent.AgentState, topNode.GoalState);
 
             TreeNode<TAction> cheapestNode = topNode;
             TreeNode<TAction> currentNode = cheapestNode;
@@ -133,7 +136,7 @@ namespace BlueGOAP
             {
                 //查找action的effects，和goal中也存在
                 IState data = node.GoalState.GetSameData(handler.Action.Effects);
-                //查找action的effects，若同时在goal中也存在，那么就把这个状态添加到节点的当前状态中
+                //那么就把这个状态添加到节点的当前状态中
                 node.CurrentState.SetData(data);
                 //把action的先决条件设置到节点的goalState中
                 node.GoalState.SetData(handler.Action.Preconditions);
