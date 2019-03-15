@@ -23,7 +23,6 @@ namespace BlueGOAPTest
         {
             AddGoal(new AttackGoal(_agent));
             AddGoal(new AlertGoal(_agent));
-            AddGoal(new MoveGoal(_agent));
             AddGoal(new AttackIdleGoal(_agent));
             AddGoal(new InjureGoal(_agent));
         }

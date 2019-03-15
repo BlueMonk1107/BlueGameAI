@@ -33,7 +33,7 @@ namespace BlueGOAPTest
 
         protected override bool ActiveCondition()
         {
-            return GetAgentStateValue(KeyNameEnum.NEAR_ENEMY) == true
+            return GetAgentStateValue(KeyNameEnum.FIND_ENEMY) == true
                 && GetAgentStateValue(KeyNameEnum.ATTACK_IDLE) == false;
         }
     }

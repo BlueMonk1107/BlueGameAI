@@ -183,7 +183,7 @@ namespace BlueGOAP
                     foreach (IActionHandler<TAction> handler in map[key])
                     {
                         //筛选能够执行的动作
-                        if (!handlers.Contains(handler) && handler.CanPerformAction())
+                        if (!handlers.Contains(handler))
                         {
                             handlers.Add(handler);
                         }
