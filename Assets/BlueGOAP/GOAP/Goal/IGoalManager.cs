@@ -3,11 +3,11 @@ namespace BlueGOAP
 {
     public interface IGoalManager<TGoal>
     {
-        IGoal CurrentGoal { get; }
+        IGoal<TGoal> CurrentGoal { get; }
         void AddGoal(TGoal goalLabel);
         void RemoveGoal(TGoal goalLabel);
-        IGoal GetGoal(TGoal goalLabel);
-        IGoal FindGoal();
+        IGoal<TGoal> GetGoal(TGoal goalLabel);
+        IGoal<TGoal> FindGoal();
         void UpdateData();
     }
 }

@@ -1,19 +1,22 @@
 
+using System;
+
 namespace BlueGOAP
 {
-    public abstract class ActionHandler<TAction> : IActionHandler<TAction>
+    public abstract class ActionHandlerBase<TAction> : IActionHandler<TAction>
     {
-        /// <summary>
-        /// 动作标签
-        /// </summary>
-        public TAction Label { get; private set; }
         /// <summary>
         /// 动作
         /// </summary>
         public IAction<TAction> Action { get; private set; }
 
-        public int ID {
-            get { return Action.ID; }
+        public TAction Label {
+            get { return Action.Label; }
+        }
+
+        public ActionHandlerBase(IAction<TAction> action)
+        {
+            Action = action;
         }
 
         public bool CanPerformAction()
@@ -21,10 +24,9 @@ namespace BlueGOAP
             return Action.VerifyPreconditions();
         }
 
-        public ActionHandler(TAction actionLabel, IAction<TAction> action)
+        public void AddFinishAction(Action onFinishAction)
         {
-            Label = actionLabel;
-            Action = action;
+            Action.AddFinishAction(onFinishAction);
         }
 
         public abstract void Enter();

@@ -3,9 +3,9 @@ namespace BlueGOAP
     public interface IAction<TAction>
     {
         /// <summary>
-        /// 当前动作的ID
+        /// 当前动作的标签
         /// </summary>
-        int ID { get; }
+        TAction Label { get; }
         /// <summary>
         /// 动作花费 默认为1
         /// </summary>

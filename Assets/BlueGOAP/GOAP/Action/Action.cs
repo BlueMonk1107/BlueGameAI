@@ -1,10 +1,9 @@
 
 namespace BlueGOAP
 {
-    public abstract class Action<TAction, TGoal> : IAction<TAction>
+    public abstract class ActionBase<TAction, TGoal> : IAction<TAction>
     {
-        private static int _idCounter  = -1;
-        public int ID { get; private set; }
+        public TAction Label { get; private set; }
         public int Cost { get; private set; }
         public int Precedence { get; private set; }
 
@@ -30,18 +29,15 @@ namespace BlueGOAP
 
         protected System.Action _onFinishAction;
 
-        public Action(IAgent<TAction, TGoal> agent)
+        public ActionBase(IAgent<TAction, TGoal> agent, TAction label)
         {
-            _idCounter++;
-            ID = _idCounter;
+            Label = label;
             Cost = 1;
             Precedence = 0;
-            _preconditions = new State();
-            _effects = new State();
+            _preconditions = InitPreconditions();
+            _effects = InitEffects();
             _agent = agent;
         }
-
-        
 
         public IState GetPreconditions()
         {
@@ -52,6 +48,17 @@ namespace BlueGOAP
         {
             return _effects;
         }
+      
+        /// <summary>
+        /// 初始化先决条件
+        /// </summary>
+        /// <returns></returns>
+        public abstract IState InitPreconditions();
+        /// <summary>
+        /// 初始化动作产生的影响
+        /// </summary>
+        /// <returns></returns>
+        public abstract IState InitEffects();
 
         /// <summary>
         /// 验证先决条件

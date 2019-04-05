@@ -5,26 +5,26 @@ namespace BlueGOAP
 {
     //结果是大于0的，第一个数大
     //就是数组是由大到小排列的
-    public class ComparerGoal : IComparer<IGoal>
+    public class ComparerGoal<TGoal> : IComparer<IGoal<TGoal>>
     {
-        public int Compare(IGoal x, IGoal y)
+        public int Compare(IGoal<TGoal> x, IGoal<TGoal> y)
         {
             return x.CompareTo(y);
         }
     }
-    public abstract class GoalManager<TAction, TGoal> : IGoalManager<TGoal>
+    public abstract class GoalManagerBase<TAction, TGoal> : IGoalManager<TGoal>
     {
-        private Dictionary<TGoal, IGoal> _goalsDic;
+        private Dictionary<TGoal, IGoal<TGoal>> _goalsDic;
         private IAgent<TAction, TGoal> _agent;
-        public IGoal CurrentGoal { get; private set; }
-        private List<IGoal> _activeGoals;
-        private IGoal _currentGoal;
+        public IGoal<TGoal> CurrentGoal { get; private set; }
+        private List<IGoal<TGoal>> _activeGoals;
+        private IGoal<TGoal> _currentGoal;
 
-        public GoalManager(IAgent<TAction, TGoal> agent)
+        public GoalManagerBase(IAgent<TAction, TGoal> agent)
         {
             _currentGoal = null;
-            _goalsDic = new Dictionary<TGoal, IGoal>();
-            _activeGoals = new List<IGoal>();
+            _goalsDic = new Dictionary<TGoal, IGoal<TGoal>>();
+            _activeGoals = new List<IGoal<TGoal>>();
             InitGoals();
         }
 
@@ -46,7 +46,7 @@ namespace BlueGOAP
 
         private void SortGoalList()
         {
-            _activeGoals.Sort(new ComparerGoal());
+            _activeGoals.Sort(new ComparerGoal<TGoal>());
         }
 
         public void RemoveGoal(TGoal goalLabel)
@@ -54,7 +54,7 @@ namespace BlueGOAP
             _goalsDic.Remove(goalLabel);
         }
 
-        public IGoal GetGoal(TGoal goalLabel)
+        public IGoal<TGoal> GetGoal(TGoal goalLabel)
         {
             if (_goalsDic.ContainsKey(goalLabel))
             {
@@ -65,7 +65,7 @@ namespace BlueGOAP
             return null;
         }
 
-        public IGoal FindGoal()
+        public IGoal<TGoal> FindGoal()
         {
             //查找优先级最大的那个
             SortGoalList();
@@ -87,7 +87,7 @@ namespace BlueGOAP
         //更新所有Goal的信息
         private void UpdateGoals()
         {
-            foreach (KeyValuePair<TGoal, IGoal> goal in _goalsDic)
+            foreach (KeyValuePair<TGoal, IGoal<TGoal>> goal in _goalsDic)
             {
                 goal.Value.Update();
             }

@@ -4,7 +4,7 @@ namespace BlueGOAP
     public class Performer<TAction, TGoal> : IPerformer
     {
         private IPlanHandler<TAction> _planHandler;
-        private IPlanner<TAction> _planner;
+        private IPlanner<TAction, TGoal> _planner;
         private IGoalManager<TGoal> _goalManager;
         private IActionManager<TAction> _actionManager;
 
@@ -15,6 +15,7 @@ namespace BlueGOAP
             _planner = new Planner<TAction, TGoal>(agent);
             _goalManager = agent.GoalManager;
             _actionManager = agent.ActionManager;
+            _actionManager.AddActionCompleteListener(PlanActionComplete);
         }
 
         public void UpdateData()
@@ -43,6 +44,12 @@ namespace BlueGOAP
         {
             _actionManager.IsPerformAction = false;
             BuildPlanAndStart();
+        }
+
+        //计划完成了当前动作
+        private void PlanActionComplete()
+        {
+            _planHandler.NextAction();
         }
 
         //检测是否需要重新制定计划

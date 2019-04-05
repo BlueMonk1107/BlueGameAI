@@ -3,15 +3,18 @@ using System.Collections;
 
 namespace BlueGOAP
 {
-    public abstract class Goal<TAction, TGoal> : IGoal
+    public abstract class GoalBase<TAction, TGoal> : IGoal<TGoal>
     {
         private IAgent<TAction, TGoal> _agent;
-        private Action<IGoal> _onActivate;
-        private Action<IGoal> _onInactivate;
+        private Action<IGoal<TGoal>> _onActivate;
+        private Action<IGoal<TGoal>> _onInactivate;
         private bool _lastActiveState;
 
-        public Goal(IAgent<TAction, TGoal> agent)
+        public TGoal Label { get; private set; }
+
+        public GoalBase(IAgent<TAction, TGoal> agent,TGoal label)
         {
+            Label = label;
             _agent = agent;
             _lastActiveState = false;
         }
@@ -31,12 +34,12 @@ namespace BlueGOAP
         /// </summary>
         public abstract bool IsGoalAchieved(IState state);
 
-        public void AddGoalActivateListener(Action<IGoal> onActivate)
+        public void AddGoalActivateListener(Action<IGoal<TGoal>> onActivate)
         {
             _onActivate = onActivate;
         }
 
-        public void AddGoalInactivateListener(Action<IGoal> onInactivate)
+        public void AddGoalInactivateListener(Action<IGoal<TGoal>> onInactivate)
         {
             _onInactivate = onInactivate;
         }
@@ -62,7 +65,7 @@ namespace BlueGOAP
         /// <returns></returns>
         protected abstract bool IsSatisfyActiveCondition();
 
-        public int CompareTo(IGoal otherGoal)
+        public int CompareTo(IGoal<TGoal> otherGoal)
         {
             return GetPriority() - otherGoal.GetPriority() > 0 ? 1 : -1;
         }

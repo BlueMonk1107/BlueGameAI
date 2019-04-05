@@ -13,13 +13,18 @@ namespace BlueGOAP
         /// </summary>
         IAction<TAction> Action { get; }
         /// <summary>
-        /// 获取ID（与动作ID相同）
+        /// 当前处理器处理的动作的标签
         /// </summary>
-        int ID { get; }
+        TAction Label { get; }
         /// <summary>
         /// 判断当前状态是否能够执行动作
         /// </summary>
         /// <returns></returns>
         bool CanPerformAction();
+        /// <summary>
+        /// 添加动作完成回调
+        /// </summary>
+        /// <param name="onFinishAction"></param>
+        void AddFinishAction(System.Action onFinishAction);
     }
 }

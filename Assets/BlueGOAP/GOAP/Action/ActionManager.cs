@@ -1,10 +1,11 @@
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace BlueGOAP
 {
-    public abstract class ActionManager<TAction, TGoal> : IActionManager<TAction>
+    public abstract class ActionManagerBase<TAction, TGoal> : IActionManager<TAction>
     {
         private Dictionary<TAction, IActionHandler<TAction>> _handlerDic;
         private IFSM<TAction> _fsm;
@@ -12,8 +13,9 @@ namespace BlueGOAP
         //效果的键值和动作的映射关系
         public bool IsPerformAction { get; set; }
         public Dictionary<object, HashSet<IActionHandler<TAction>>> EffectsAndActionMap { get; private set; }
+        private Action _onActionComplete;
 
-        public ActionManager(IAgent<TAction, TGoal> agent)
+        public ActionManagerBase(IAgent<TAction, TGoal> agent)
         {
             _agent = agent;
             _handlerDic = new Dictionary<TAction, IActionHandler<TAction>>();
@@ -49,7 +51,10 @@ namespace BlueGOAP
         {
             var handler = _agent.Maps.GetActionHandler(actionLabel);
             if (handler != null)
+            {
                 _handlerDic.Add(actionLabel, handler);
+                handler.AddFinishAction(_onActionComplete);
+            }
         }
 
         public void RemoveHandler(TAction actionLabel)
@@ -68,11 +73,6 @@ namespace BlueGOAP
             return null;
         }
 
-        public IActionHandler<TAction> GetHandler(int id)
-        {
-            return _handlerDic.FirstOrDefault(u => u.Value.ID == id).Value;
-        }
-
         public void FrameFun()
         {
             if (IsPerformAction)
@@ -82,6 +82,11 @@ namespace BlueGOAP
         public void ChangeCurrentAction(TAction actionLabel)
         {
             _fsm.ChangeState(actionLabel);
+        }
+
+        public void AddActionCompleteListener(Action actionComplete)
+        {
+            _onActionComplete = actionComplete;
         }
 
         private void InitFsm()

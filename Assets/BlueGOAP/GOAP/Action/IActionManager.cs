@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 
 namespace BlueGOAP
@@ -31,11 +32,6 @@ namespace BlueGOAP
         /// <param name="handler"></param>
         IActionHandler<TAction> GetHandler(TAction actionLabel);
         /// <summary>
-        /// 获取处理类对象
-        /// </summary>
-        /// <param name="handler"></param>
-        IActionHandler<TAction> GetHandler(int id);
-        /// <summary>
         /// 帧函数
         /// </summary>
         void FrameFun();
@@ -44,5 +40,10 @@ namespace BlueGOAP
         /// </summary>
         /// <param name="actionLabel"></param>
         void ChangeCurrentAction(TAction actionLabel);
+        /// <summary>
+        /// 添加动作完成的监听
+        /// </summary>
+        /// <param name="actionComplete"></param>
+        void AddActionCompleteListener(Action actionComplete);
     }
 }

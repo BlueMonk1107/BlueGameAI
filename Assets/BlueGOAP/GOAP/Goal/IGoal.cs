@@ -3,14 +3,18 @@ using System.Collections;
 
 namespace BlueGOAP
 {
-    public interface IGoal
+    public interface IGoal<TGoal>
     {
+        /// <summary>
+        /// 目标的标签
+        /// </summary>
+        TGoal Label { get; }
         /// <summary>
         /// 比较Goal的优先级
         /// </summary>
         /// <param name="otherGoal"></param>
         /// <returns></returns>
-        int CompareTo(IGoal otherGoal);
+        int CompareTo(IGoal<TGoal> otherGoal);
         /// <summary>
         /// 获取优先级
         /// </summary>
@@ -31,12 +35,12 @@ namespace BlueGOAP
         /// 添加目标激活的监听
         /// </summary>
         /// <param name="onActivate"></param>
-        void AddGoalActivateListener(Action<IGoal> onActivate);
+        void AddGoalActivateListener(Action<IGoal<TGoal>> onActivate);
         /// <summary>
         /// 添加目标未激活的监听
         /// </summary>
         /// <param name="onInactivate"></param>
-        void AddGoalInactivateListener(Action<IGoal> onInactivate);
+        void AddGoalInactivateListener(Action<IGoal<TGoal>> onInactivate);
 
         void Update();
     }

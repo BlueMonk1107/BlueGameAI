@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace BlueGOAP
 {
-    public interface IPlanner<TAction>
+    public interface IPlanner<TAction, TGoal>
     {
         /// <summary>
         /// 获取当前的动作
@@ -12,7 +12,7 @@ namespace BlueGOAP
         /// <summary>
         /// 计划
         /// </summary>
-        Queue<IActionHandler<TAction>> BuildPlan(IGoal goal);
+        Queue<IActionHandler<TAction>> BuildPlan(IGoal<TGoal> goal);
         /// <summary>
         /// 是否完成计划
         /// </summary>

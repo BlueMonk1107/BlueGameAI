@@ -14,7 +14,7 @@ namespace BlueGOAP
             return x.Action.Precedence - y.Action.Precedence;
         }
     }
-    public class Planner<TAction, TGoal> : IPlanner<TAction>
+    public class Planner<TAction, TGoal> : IPlanner<TAction, TGoal>
     {
         private IAgent<TAction, TGoal> _agent;
         private Tree<TAction> _tree;
@@ -31,7 +31,7 @@ namespace BlueGOAP
             return null;
         }
 
-        public Queue<IActionHandler<TAction>> BuildPlan(IGoal goal)
+        public Queue<IActionHandler<TAction>> BuildPlan(IGoal<TGoal> goal)
         {
             _plan.Clear();
 
@@ -47,7 +47,7 @@ namespace BlueGOAP
             return _plan;
         }
 
-        public TreeNode<TAction> Plan(IGoal goal)
+        public TreeNode<TAction> Plan(IGoal<TGoal> goal)
         {
             //初始化树的顶点
             TreeNode<TAction> topNode = _tree.CreateTopNode();
@@ -115,7 +115,7 @@ namespace BlueGOAP
             return false;
         }
 
-        private void SetNodeState(TreeNode<TAction> node, IGoal goal, IActionHandler<TAction> handler)
+        private void SetNodeState(TreeNode<TAction> node, IGoal<TGoal> goal, IActionHandler<TAction> handler)
         {
             IState goalEffects = goal.GetEffects();
             //第一个节点的id为-1

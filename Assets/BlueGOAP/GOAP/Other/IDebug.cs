@@ -1,24 +1,15 @@
 
 namespace BlueGOAP
 {
-    public class DebugMsgBase
+    public abstract class DebugMsgBase
     {
         public static DebugMsgBase Instance { get; protected set; }
 
-        public virtual void Log(string msg)
-        {
-            throw new System.NotImplementedException();
-        }
+        public abstract void Log(string msg);
 
-        public virtual void LogWarning(string msg)
-        {
-            throw new System.NotImplementedException();
-        }
+        public abstract void LogWarning(string msg);
 
-        public virtual void LogError(string msg)
-        {
-            throw new System.NotImplementedException();
-        }
+        public abstract void LogError(string msg);
     }
 
     public class DebugMsg
