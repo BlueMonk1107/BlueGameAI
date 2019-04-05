@@ -3,9 +3,9 @@ using BlueGOAP;
 
 namespace BlueGOAPTest
 {
-    public class AttackHandlerBase  : ActionHandlerBase<ActionEnum>
+    public class AttackHandler  : ActionHandlerBase<ActionEnum>
     {
-        public AttackHandlerBase(IAction<ActionEnum> action) : base(action)
+        public AttackHandler(IAction<ActionEnum> action) : base(action)
         {
         }
 

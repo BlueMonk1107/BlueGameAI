@@ -15,15 +15,14 @@ namespace BlueGOAP
         /// </summary>
         int Precedence { get; }
         /// <summary>
-        /// 获取当前动作的先决条件
+        /// 执行动作的先决条件
         /// </summary>
-        /// <returns></returns>
-        IState GetPreconditions();
+        IState Preconditions { get; }
+
         /// <summary>
-        /// 获取当前动作执行后对状态的影响
+        /// 动作执行后的状态
         /// </summary>
-        /// <returns></returns>
-        IState GetEffects();
+        IState Effects { get; }
         /// <summary>
         /// 验证先决条件
         /// </summary>

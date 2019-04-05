@@ -36,7 +36,7 @@ namespace BlueGOAP
 
             foreach (var handler in _handlerDic)
             {
-                IState state = handler.Value.Action.GetEffects();
+                IState state = handler.Value.Action.Effects;
                 foreach (object key in state.GetKeys())
                 {
                     if (EffectsAndActionMap[key] == null)

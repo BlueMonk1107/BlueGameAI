@@ -5,18 +5,24 @@ namespace BlueGOAPTest
 {
     public class InjureAction : ActionBase<ActionEnum, GoalEnum>
     {
-        public InjureAction(IAgent<ActionEnum, GoalEnum> agent, ActionEnum label) : base(agent, label)
+        public override ActionEnum Label { get { return ActionEnum.INJURE; } }
+        public override int Cost { get { return 1; } }
+        public override int Precedence { get { return 0; } }
+        
+        public InjureAction(IAgent<ActionEnum, GoalEnum> agent) : base(agent)
         {
         }
 
-        public override IState InitPreconditions()
+        protected override IState InitPreconditions()
         {
             throw new System.NotImplementedException();
         }
 
-        public override IState InitEffects()
+        protected override IState InitEffects()
         {
             throw new System.NotImplementedException();
         }
+
+
     }
 }

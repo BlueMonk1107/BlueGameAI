@@ -9,7 +9,7 @@ namespace BlueGOAPTest
         
         protected override IMaps<ActionEnum, GoalEnum> InitMaps()
         {
-            return new Map();
+            return new Map(this);
         }
 
         protected override IActionManager<ActionEnum> InitActionManager()

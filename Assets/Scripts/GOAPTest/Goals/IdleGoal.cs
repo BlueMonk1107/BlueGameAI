@@ -5,7 +5,12 @@ namespace BlueGOAPTest
 {
     public class IdleGoal : GoalBase<ActionEnum, GoalEnum>
     {
-        public IdleGoal(IAgent<ActionEnum, GoalEnum> agent, GoalEnum label) : base(agent, label)
+        public override GoalEnum Label
+        {
+            get { return GoalEnum.IDLE; }
+        }
+
+        public IdleGoal(IAgent<ActionEnum, GoalEnum> agent) : base(agent)
         {
         }
 

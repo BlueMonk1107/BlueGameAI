@@ -10,11 +10,10 @@ namespace BlueGOAP
         private Action<IGoal<TGoal>> _onInactivate;
         private bool _lastActiveState;
 
-        public TGoal Label { get; private set; }
+        public abstract TGoal Label { get;}
 
-        public GoalBase(IAgent<TAction, TGoal> agent,TGoal label)
+        public GoalBase(IAgent<TAction, TGoal> agent)
         {
-            Label = label;
             _agent = agent;
             _lastActiveState = false;
         }

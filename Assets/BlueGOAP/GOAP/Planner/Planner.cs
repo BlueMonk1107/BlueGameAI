@@ -125,11 +125,11 @@ namespace BlueGOAP
             }
             else
             {
-                IState data = goalEffects.GetSameData(handler.Action.GetEffects());
+                IState data = goalEffects.GetSameData(handler.Action.Effects);
                 //查找action的effects，若同时在goal中也存在，那么就把这个状态添加到节点的当前状态中
                 node.CurrentState.SetData(data);
                 //把action的先决条件设置到节点的goalState中
-                node.GoalState.SetData(handler.Action.GetPreconditions());
+                node.GoalState.SetData(handler.Action.Preconditions);
                 //把GoalState中有且CurrentState没有的添加到CurrentState中
                 //数据从agent的当前状态中获取
                 node.CurrentState.SetKeys(_agent.AgentState, node.GoalState);
