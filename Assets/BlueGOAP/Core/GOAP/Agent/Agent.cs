@@ -16,7 +16,7 @@ namespace BlueGOAP
         public Agent()
         {
             DebugMsgBase.Instance = InitDebugMsg();
-            AgentState = new State();
+            AgentState = InitAgentState();
             Maps = InitMaps();
             ActionManager = InitActionManager();
             GoalManager = InitGoalManager();
@@ -25,7 +25,7 @@ namespace BlueGOAP
 
             AgentState.AddStateChangeListener(UpdateData);
         }
-
+        protected abstract IState InitAgentState();
         protected abstract IMaps<TAction, TGoal> InitMaps();
         protected abstract IActionManager<TAction> InitActionManager();
         protected abstract IGoalManager<TGoal> InitGoalManager();

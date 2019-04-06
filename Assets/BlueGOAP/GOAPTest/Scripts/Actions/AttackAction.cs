@@ -7,7 +7,7 @@ namespace BlueGOAPTest
     {
         public override ActionEnum Label { get { return ActionEnum.ATTACK; } }
         public override int Cost { get { return 1; } }
-        public override int Precedence { get { return 0; } }
+        public override int Precedence { get { return 80; } }
 
         public AttackAction(IAgent<ActionEnum, GoalEnum> agent) : base(agent)
         {

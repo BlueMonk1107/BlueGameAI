@@ -7,7 +7,7 @@ namespace BlueGOAP
 {
     public class State : IState
     {
-        private Dictionary<string,bool> _dataTable;
+        private Dictionary<string, bool> _dataTable;
         private Action _onChange;
 
         public State()
@@ -17,29 +17,23 @@ namespace BlueGOAP
 
         public void SetState(string key, bool value)
         {
-            if (key == null)
+            if (_dataTable.ContainsKey(key) && _dataTable[key] != value)
             {
-                DebugMsg.Log("state key can not be null!");
-            }
-            else
-            {
-                if (_dataTable.ContainsKey(key))
-                {
-                    _dataTable[key] = value;
-                }
-                else
-                {
-                    _dataTable.Add(key,value);
-                }
-
-                if(_onChange != null)
+                if (_onChange != null )
                     _onChange();
             }
+            else if(!_dataTable.ContainsKey(key))
+            {
+                if (_onChange != null)
+                    _onChange();
+            }
+
+            _dataTable[key] = value;
         }
 
         public void AddStateChangeListener(Action onChange)
         {
-            _onChange += onChange;
+            _onChange = onChange;
         }
 
         public IState GetSameData(IState goalState)
@@ -69,7 +63,7 @@ namespace BlueGOAP
         {
             foreach (var key in otherState.GetKeys())
             {
-                if ( !ContainKey(key) || _dataTable[key] != otherState.GetValue(key))
+                if (!ContainKey(key) || _dataTable[key] != otherState.GetValue(key))
                 {
                     return false;
                 }
@@ -96,22 +90,16 @@ namespace BlueGOAP
         {
             foreach (var key in otherState.GetKeys())
             {
-                if (!_dataTable.ContainsKey(key))
-                {
-                    _dataTable.Add(key, agentState.GetValue(key));
-                }
+                SetState(key, agentState.GetValue(key));
             }
-
-            _onChange();
         }
 
         public void SetData(IState otherState)
         {
             foreach (var key in otherState.GetKeys())
             {
-                _dataTable[key] = otherState.GetValue(key);
+                SetState(key, otherState.GetValue(key));
             }
-            _onChange();
         }
 
         public bool ContainKey(string key)
@@ -134,10 +122,10 @@ namespace BlueGOAP
     {
         public State() : base()
         {
-            
+
         }
 
-        public void SetState(TKey key,bool value)
+        public void SetState(TKey key, bool value)
         {
             base.SetState(key.ToString(), value);
         }

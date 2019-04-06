@@ -19,10 +19,11 @@ namespace BlueGOAPTest
         {
             get
             {
-                if (Vector3.Distance(_self.position, _enemy.position) < 1)
+                if (Vector3.Distance(_self.position, _enemy.position) < 5)
                 {
+                    DebugMsg.Log("see enemy");
                     Vector3 dirToEnemy = (_enemy.position - _self.position).normalized;
-                    if (Vector3.Angle(_self.forward, dirToEnemy) < 20)
+                    if (Vector3.Angle(_self.forward, dirToEnemy) < 60)
                         return true;
                 }
 

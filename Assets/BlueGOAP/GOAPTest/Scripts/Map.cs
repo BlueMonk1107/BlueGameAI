@@ -5,10 +5,8 @@ namespace BlueGOAPTest
 {
     public class Map : MapsBase<ActionEnum, GoalEnum>
     {
-        private IAgent<ActionEnum, GoalEnum> _agent;
-        public Map(IAgent<ActionEnum, GoalEnum> agent) : base()
+        public Map(IAgent<ActionEnum, GoalEnum> agent) : base(agent)
         {
-            _agent = agent;
         }
 
         protected override void InitActinMaps()

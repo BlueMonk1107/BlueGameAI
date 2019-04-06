@@ -20,6 +20,7 @@ namespace BlueGOAP
         {
             _agent = agent;
             _triggers = new HashSet<ITrigger>();
+            InitTriggers();
         }
 
         public void FrameFun()

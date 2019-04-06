@@ -6,8 +6,8 @@ namespace BlueGOAPTest
     public class MoveAction : ActionBase<ActionEnum, GoalEnum>
     {
         public override ActionEnum Label { get { return ActionEnum.MOVE; } }
-        public override int Cost { get { return 1; } }
-        public override int Precedence { get { return 0; } }
+        public override int Cost { get { return 5; } }
+        public override int Precedence { get { return 70; } }
 
         public MoveAction(IAgent<ActionEnum, GoalEnum> agent) : base(agent)
         {

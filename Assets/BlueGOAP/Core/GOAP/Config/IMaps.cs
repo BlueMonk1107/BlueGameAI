@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections.Generic;
+using BlueGOAPTest;
 
 namespace BlueGOAP
 {
@@ -17,9 +18,11 @@ namespace BlueGOAP
     {
         private Dictionary<TAction, IActionHandler<TAction>> _actionHandlerDic;
         private Dictionary<TGoal, IGoal<TGoal>> _goalsDic;
+        protected IAgent<ActionEnum, GoalEnum> _agent;
 
-        public MapsBase()
+        public MapsBase(IAgent<ActionEnum, GoalEnum> agent)
         {
+            _agent = agent;
             _actionHandlerDic = new Dictionary<TAction, IActionHandler<TAction>>();
             _goalsDic = new Dictionary<TGoal, IGoal<TGoal>>();
             InitActinMaps();

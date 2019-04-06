@@ -7,7 +7,7 @@ namespace BlueGOAPTest
     {
         public override ActionEnum Label { get { return ActionEnum.MOVE; } }
         public override int Cost { get { return 1; } }
-        public override int Precedence { get { return 0; } }
+        public override int Precedence { get { return 95; } }
 
         public FindEnemyAction(IAgent<ActionEnum, GoalEnum> agent) : base(agent)
         {
