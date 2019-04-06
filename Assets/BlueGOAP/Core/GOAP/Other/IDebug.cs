@@ -3,7 +3,7 @@ namespace BlueGOAP
 {
     public abstract class DebugMsgBase
     {
-        public static DebugMsgBase Instance { get; protected set; }
+        public static DebugMsgBase Instance { get; set; }
 
         public abstract void Log(string msg);
 

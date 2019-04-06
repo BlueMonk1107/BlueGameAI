@@ -11,7 +11,7 @@ namespace BlueGOAP
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        void SetState(object key, object value);
+        void SetState(string key, bool value);
         /// <summary>
         /// 添加数据修改监听
         /// </summary>
@@ -26,7 +26,7 @@ namespace BlueGOAP
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        object GetValue(object key);
+        bool GetValue(string key);
         /// <summary>
         /// 若当前State包含otherState所有的键值对，且对应值都相等，返回true，反之返回false
         /// </summary>
@@ -37,7 +37,7 @@ namespace BlueGOAP
         /// </summary>
         /// <param name="otherState"></param>
         /// <returns></returns>
-        List<object> GetValueDifferences(IState otherState);
+        ICollection<string> GetValueDifferences(IState otherState);
         /// <summary>
         /// 把所提供状态的所有键值进行筛选
         /// 当前状态不存在的就添加进来，存在则忽略
@@ -52,12 +52,12 @@ namespace BlueGOAP
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        bool ContainKey(object key);
+        bool ContainKey(string key);
         /// <summary>
         /// 获取当前所有键值
         /// </summary>
         /// <returns></returns>
-        ICollection GetKeys();
+        ICollection<string> GetKeys();
         /// <summary>
         /// 清空数据
         /// </summary>

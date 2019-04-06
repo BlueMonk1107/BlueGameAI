@@ -7,15 +7,15 @@ namespace BlueGOAP
 {
     public class State : IState
     {
-        private Hashtable _dataTable;
+        private Dictionary<string,bool> _dataTable;
         private Action _onChange;
 
         public State()
         {
-            _dataTable = Hashtable.Synchronized(new Hashtable());
+            _dataTable = new Dictionary<string, bool>();
         }
 
-        public void SetState(object key, object value)
+        public void SetState(string key, bool value)
         {
             if (key == null)
             {
@@ -23,7 +23,7 @@ namespace BlueGOAP
             }
             else
             {
-                if (_dataTable.Contains(key))
+                if (_dataTable.ContainsKey(key))
                 {
                     _dataTable[key] = value;
                 }
@@ -32,7 +32,8 @@ namespace BlueGOAP
                     _dataTable.Add(key,value);
                 }
 
-                _onChange();
+                if(_onChange != null)
+                    _onChange();
             }
         }
 
@@ -44,7 +45,7 @@ namespace BlueGOAP
         public IState GetSameData(IState goalState)
         {
             IState data = new State();
-            foreach (DictionaryEntry entry in _dataTable)
+            foreach (var entry in _dataTable)
             {
                 if (goalState.ContainKey(entry.Key))
                 {
@@ -55,7 +56,7 @@ namespace BlueGOAP
             return data;
         }
 
-        public object GetValue(object key)
+        public bool GetValue(string key)
         {
             if (key == null)
             {
@@ -66,7 +67,7 @@ namespace BlueGOAP
 
         public bool ContainState(IState otherState)
         {
-            foreach (object key in otherState.GetKeys())
+            foreach (var key in otherState.GetKeys())
             {
                 if ( !ContainKey(key) || _dataTable[key] != otherState.GetValue(key))
                 {
@@ -77,9 +78,9 @@ namespace BlueGOAP
             return true;
         }
 
-        public List<object> GetValueDifferences(IState otherState)
+        public ICollection<string> GetValueDifferences(IState otherState)
         {
-            List<object> keys = new List<object>();
+            List<string> keys = new List<string>();
             foreach (var key in otherState.GetKeys())
             {
                 if (otherState.GetValue(key) != _dataTable[key])
@@ -93,7 +94,7 @@ namespace BlueGOAP
 
         public void SetKeys(IState agentState, IState otherState)
         {
-            foreach (object key in otherState.GetKeys())
+            foreach (var key in otherState.GetKeys())
             {
                 if (!_dataTable.ContainsKey(key))
                 {
@@ -106,19 +107,19 @@ namespace BlueGOAP
 
         public void SetData(IState otherState)
         {
-            foreach (object key in otherState.GetKeys())
+            foreach (var key in otherState.GetKeys())
             {
                 _dataTable[key] = otherState.GetValue(key);
             }
             _onChange();
         }
 
-        public bool ContainKey(object key)
+        public bool ContainKey(string key)
         {
-            return _dataTable.Contains(key);
+            return _dataTable.ContainsKey(key);
         }
 
-        public ICollection GetKeys()
+        public ICollection<string> GetKeys()
         {
             return _dataTable.Keys;
         }
@@ -126,6 +127,29 @@ namespace BlueGOAP
         public void Clear()
         {
             _dataTable.Clear();
+        }
+    }
+
+    public class State<TKey> : State
+    {
+        public State() : base()
+        {
+            
+        }
+
+        public void SetState(TKey key,bool value)
+        {
+            base.SetState(key.ToString(), value);
+        }
+
+        public bool GetValue(TKey key)
+        {
+            return base.GetValue(key.ToString());
+        }
+
+        public bool ContainKey(TKey key)
+        {
+            return base.ContainKey(key.ToString());
         }
     }
 }

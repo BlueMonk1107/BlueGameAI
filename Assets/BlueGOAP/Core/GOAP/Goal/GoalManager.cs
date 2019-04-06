@@ -22,6 +22,7 @@ namespace BlueGOAP
 
         public GoalManagerBase(IAgent<TAction, TGoal> agent)
         {
+            _agent = agent;
             _currentGoal = null;
             _goalsDic = new Dictionary<TGoal, IGoal<TGoal>>();
             _activeGoals = new List<IGoal<TGoal>>();

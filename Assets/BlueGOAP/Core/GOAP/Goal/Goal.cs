@@ -29,9 +29,20 @@ namespace BlueGOAP
         public abstract IState GetEffects();
 
         /// <summary>
+        /// 获取代理状态的值
+        /// </summary>
+        /// <typeparam name="Tkey"></typeparam>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        protected bool GetAgentStateValue<Tkey>(Tkey key)
+        {
+            return _agent.AgentState.GetValue(key.ToString());
+        }
+
+        /// <summary>
         /// 是否已经实现目标
         /// </summary>
-        public abstract bool IsGoalAchieved(IState state);
+        public abstract bool IsGoalComplete();
 
         public void AddGoalActivateListener(Action<IGoal<TGoal>> onActivate)
         {
@@ -45,9 +56,9 @@ namespace BlueGOAP
 
         public void Update()
         {
-            if (IsSatisfyActiveCondition() != _lastActiveState)
+            if (ActiveCondition() != _lastActiveState)
             {
-                _lastActiveState = IsSatisfyActiveCondition();
+                _lastActiveState = ActiveCondition();
                 if (_lastActiveState)
                 {
                     _onActivate(this);
@@ -59,10 +70,10 @@ namespace BlueGOAP
             }
         }
         /// <summary>
-        /// 判断当前的Goal是否满足激活条件
+        /// 当前Goal的激活条件
         /// </summary>
         /// <returns></returns>
-        protected abstract bool IsSatisfyActiveCondition();
+        protected abstract bool ActiveCondition();
 
         public int CompareTo(IGoal<TGoal> otherGoal)
         {

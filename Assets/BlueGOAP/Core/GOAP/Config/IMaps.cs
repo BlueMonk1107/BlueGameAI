@@ -23,6 +23,7 @@ namespace BlueGOAP
             _actionHandlerDic = new Dictionary<TAction, IActionHandler<TAction>>();
             _goalsDic = new Dictionary<TGoal, IGoal<TGoal>>();
             InitActinMaps();
+            InitGoalMaps();
         }
 
         /// <summary>

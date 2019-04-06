@@ -12,7 +12,7 @@ namespace BlueGOAP
         private IAgent<TAction, TGoal> _agent;
         //效果的键值和动作的映射关系
         public bool IsPerformAction { get; set; }
-        public Dictionary<object, HashSet<IActionHandler<TAction>>> EffectsAndActionMap { get; private set; }
+        public Dictionary<string, HashSet<IActionHandler<TAction>>> EffectsAndActionMap { get; private set; }
         private Action _onActionComplete;
 
         public ActionManagerBase(IAgent<TAction, TGoal> agent)
@@ -32,14 +32,18 @@ namespace BlueGOAP
 
         private void InitEffectsAndActionMap()
         {
-            EffectsAndActionMap = new Dictionary<object, HashSet<IActionHandler<TAction>>>();
+            EffectsAndActionMap = new Dictionary<string, HashSet<IActionHandler<TAction>>>();
 
             foreach (var handler in _handlerDic)
             {
                 IState state = handler.Value.Action.Effects;
-                foreach (object key in state.GetKeys())
+
+                if(state == null)
+                    continue;
+
+                foreach (string key in state.GetKeys())
                 {
-                    if (EffectsAndActionMap[key] == null)
+                    if (!EffectsAndActionMap.ContainsKey(key) || EffectsAndActionMap[key] == null)
                         EffectsAndActionMap[key] = new HashSet<IActionHandler<TAction>>();
 
                     EffectsAndActionMap[key].Add(handler.Value);

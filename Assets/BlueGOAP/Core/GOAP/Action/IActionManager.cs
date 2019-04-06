@@ -16,7 +16,7 @@ namespace BlueGOAP
         /// <summary>
         /// 效果和动作的映射关系
         /// </summary>
-        Dictionary<object, HashSet<IActionHandler<TAction>>> EffectsAndActionMap { get; }
+        Dictionary<string, HashSet<IActionHandler<TAction>>> EffectsAndActionMap { get; }
         /// <summary>
         /// 添加处理类对象
         /// </summary>

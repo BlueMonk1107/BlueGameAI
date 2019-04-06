@@ -163,7 +163,7 @@ namespace BlueGOAP
             var keys = node.CurrentState.GetValueDifferences(node.GoalState);
             var map = _agent.ActionManager.EffectsAndActionMap;
 
-            foreach (object key in keys)
+            foreach (string key in keys)
             {
                 if (map.ContainsKey(key))
                 {

@@ -28,9 +28,8 @@ namespace BlueGOAP
         /// <summary>
         /// 是否已经实现目标
         /// </summary>
-        /// <param name="state"></param>
         /// <returns></returns>
-        bool IsGoalAchieved(IState state);
+        bool IsGoalComplete();
         /// <summary>
         /// 添加目标激活的监听
         /// </summary>
