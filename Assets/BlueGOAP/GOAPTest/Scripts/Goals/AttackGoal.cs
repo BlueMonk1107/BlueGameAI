@@ -1,4 +1,4 @@
-
+﻿
 using BlueGOAP;
 
 namespace BlueGOAPTest
@@ -14,11 +14,15 @@ namespace BlueGOAPTest
         {
         }
 
+        public override float GetPriority()
+        {
+            return 3;
+        }
+
         public override IState GetEffects()
         {
             State<KeyNameEnum> effects = new State<KeyNameEnum>();
             effects.SetState(KeyNameEnum.ATTACK,false);
-            effects.SetState(KeyNameEnum.LOOK_AT_ENEMY, true);
             return effects;
         }
 
@@ -31,7 +35,7 @@ namespace BlueGOAPTest
         protected override bool ActiveCondition()
         {
             return GetAgentStateValue(KeyNameEnum.ATTACK) == true
-                && GetAgentStateValue(KeyNameEnum.NEAR_ENEMY);
+                && GetAgentStateValue(KeyNameEnum.NEAR_ENEMY) == true;
         }
     }
 }

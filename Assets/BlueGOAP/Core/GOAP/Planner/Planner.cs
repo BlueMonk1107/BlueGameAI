@@ -1,10 +1,10 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 
 namespace BlueGOAP
 {
     /// <summary>
-    /// ÓÅÏÈ¼¶±È½ÏÆ÷
+    /// ä¼˜å…ˆçº§æ¯”è¾ƒå™¨
     /// </summary>
     /// <typeparam name="TAction"></typeparam>
     class PrecedenceComparer<TAction> : IComparer<IActionHandler<TAction>>
@@ -19,10 +19,11 @@ namespace BlueGOAP
         private IAgent<TAction, TGoal> _agent;
         private Tree<TAction> _tree;
         private Queue<IActionHandler<TAction>> _plan;
-
+        
         public Planner(IAgent<TAction, TGoal> agent)
         {
             _agent = agent;
+            _tree = new Tree<TAction>();
             _plan = new Queue<IActionHandler<TAction>>();
         }
 
@@ -33,39 +34,49 @@ namespace BlueGOAP
 
         public Queue<IActionHandler<TAction>> BuildPlan(IGoal<TGoal> goal)
         {
+            DebugMsg.Log("åˆ¶å®šè®¡åˆ’");
             _plan.Clear();
 
             if (goal == null)
                 return _plan;
 
             TreeNode<TAction> currentNode = Plan(goal);
-            while (currentNode.ID != -1)
+            while (currentNode.ID != TreeNode<TAction>.DEFAULT_ID)
             {
                 _plan.Enqueue(currentNode.ActionHandler);
                 currentNode = currentNode.ParentNode;
             }
+
+            foreach (IActionHandler<TAction> handler in _plan)
+            {
+                DebugMsg.Log("è®¡åˆ’é¡¹ï¼š"+handler.Label);
+            }
+            DebugMsg.Log("è®¡åˆ’ç»“æŸ");
             return _plan;
         }
 
         public TreeNode<TAction> Plan(IGoal<TGoal> goal)
         {
-            //³õÊ¼»¯Ê÷µÄ¶¥µã
+            //åˆå§‹åŒ–æ ‘çš„é¡¶ç‚¹
             TreeNode<TAction> topNode = _tree.CreateTopNode();
-            SetNodeState(topNode, goal, null);
+            topNode.GoalState.SetData(goal.GetEffects());
             topNode.Cost = GetCost(topNode);
 
             TreeNode<TAction> cheapestNode = topNode;
             TreeNode<TAction> currentNode = cheapestNode;
             while (!IsEnd(currentNode))
             {
+                DebugMsg.Log("current ID:"+currentNode.ID.ToString());
                 currentNode = cheapestNode;
                 cheapestNode = null;
-                //»ñÈ¡ËùÓĞµÄ×ÓĞĞÎª
+                //è·å–æ‰€æœ‰çš„å­è¡Œä¸º
                 List<IActionHandler<TAction>> handlers = GetSubHandlers(currentNode);
                 TreeNode<TAction> subNode = null;
+                DebugMsg.Log("handlers count:" + handlers.Count);
                 for (int i = 0; i < handlers.Count; i++)
                 {
                     subNode = _tree.CreateNode(handlers[i]);
+                    SetNodeState(subNode, handlers[i]);
                     subNode.Cost = GetCost(subNode);
                     subNode.ParentNode = currentNode;
                     cheapestNode = GetCheapestNode(subNode, cheapestNode);
@@ -111,27 +122,22 @@ namespace BlueGOAP
 
             if (GetStateDifferecnceNum(currentNode) == 0)
                 return true;
-
+            DebugMsg.Log("different:"+ GetStateDifferecnceNum(currentNode));
             return false;
         }
 
-        private void SetNodeState(TreeNode<TAction> node, IGoal<TGoal> goal, IActionHandler<TAction> handler)
+        private void SetNodeState(TreeNode<TAction> node, IActionHandler<TAction> handler)
         {
-            IState goalEffects = goal.GetEffects();
-            //µÚÒ»¸ö½ÚµãµÄidÎª-1
-            if (node.ID == -1)
+            if (node.ID > TreeNode<TAction>.DEFAULT_ID)
             {
-                node.GoalState = goalEffects;
-            }
-            else
-            {
-                IState data = goalEffects.GetSameData(handler.Action.Effects);
-                //²éÕÒactionµÄeffects£¬ÈôÍ¬Ê±ÔÚgoalÖĞÒ²´æÔÚ£¬ÄÇÃ´¾Í°ÑÕâ¸ö×´Ì¬Ìí¼Óµ½½ÚµãµÄµ±Ç°×´Ì¬ÖĞ
+                //æŸ¥æ‰¾actionçš„effectsï¼Œå’Œgoalä¸­ä¹Ÿå­˜åœ¨
+                IState data = node.GoalState.GetSameData(handler.Action.Effects);
+                //æŸ¥æ‰¾actionçš„effectsï¼Œè‹¥åŒæ—¶åœ¨goalä¸­ä¹Ÿå­˜åœ¨ï¼Œé‚£ä¹ˆå°±æŠŠè¿™ä¸ªçŠ¶æ€æ·»åŠ åˆ°èŠ‚ç‚¹çš„å½“å‰çŠ¶æ€ä¸­
                 node.CurrentState.SetData(data);
-                //°ÑactionµÄÏÈ¾öÌõ¼şÉèÖÃµ½½ÚµãµÄgoalStateÖĞ
+                //æŠŠactionçš„å…ˆå†³æ¡ä»¶è®¾ç½®åˆ°èŠ‚ç‚¹çš„goalStateä¸­
                 node.GoalState.SetData(handler.Action.Preconditions);
-                //°ÑGoalStateÖĞÓĞÇÒCurrentStateÃ»ÓĞµÄÌí¼Óµ½CurrentStateÖĞ
-                //Êı¾İ´ÓagentµÄµ±Ç°×´Ì¬ÖĞ»ñÈ¡
+                //æŠŠGoalStateä¸­æœ‰ä¸”CurrentStateæ²¡æœ‰çš„æ·»åŠ åˆ°CurrentStateä¸­
+                //æ•°æ®ä»agentçš„å½“å‰çŠ¶æ€ä¸­è·å–
                 node.CurrentState.SetKeys(_agent.AgentState, node.GoalState);
             }
         }
@@ -151,7 +157,7 @@ namespace BlueGOAP
         }
 
         /// <summary>
-        /// »ñÈ¡ËùÓĞµÄ×Ó½ÚµãĞĞÎª
+        /// è·å–æ‰€æœ‰çš„å­èŠ‚ç‚¹è¡Œä¸º
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
@@ -159,7 +165,10 @@ namespace BlueGOAP
         {
             List<IActionHandler<TAction>> handlers = new List<IActionHandler<TAction>>();
 
-            //»ñÈ¡×´Ì¬²îÒì
+            if (node == null)
+                return handlers;
+
+            //è·å–çŠ¶æ€å·®å¼‚
             var keys = node.CurrentState.GetValueDifferences(node.GoalState);
             var map = _agent.ActionManager.EffectsAndActionMap;
 
@@ -169,7 +178,7 @@ namespace BlueGOAP
                 {
                     foreach (IActionHandler<TAction> handler in map[key])
                     {
-                        //É¸Ñ¡ÄÜ¹»Ö´ĞĞµÄ¶¯×÷
+                        //ç­›é€‰èƒ½å¤Ÿæ‰§è¡Œçš„åŠ¨ä½œ
                         if (handler.CanPerformAction())
                         {
                             handlers.Add(handler);
@@ -177,14 +186,14 @@ namespace BlueGOAP
                     }
                 }
             }
-            //½øĞĞÓÅÏÈ¼¶ÅÅĞò
+            //è¿›è¡Œä¼˜å…ˆçº§æ’åº
             handlers.Sort(new PrecedenceComparer<TAction>());
             return handlers;
         }
 
-        //ÏÈ¸ù¾İ²îÒìµÄ¼üÖµ»ñÈ¡¶ÔÓ¦µÄacton
-        //È»ºó¼ì²âactionµÄÖ´ĞĞÌõ¼şÊÇ·ñÂú×ã
-        //Âú×ã¾ÍÕÒµ½»¨·Ñ×îĞ¡µÄ¼ÓÈëµ±Ç°¶ÓÁĞ
+        //å…ˆæ ¹æ®å·®å¼‚çš„é”®å€¼è·å–å¯¹åº”çš„acton
+        //ç„¶åæ£€æµ‹actionçš„æ‰§è¡Œæ¡ä»¶æ˜¯å¦æ»¡è¶³
+        //æ»¡è¶³å°±æ‰¾åˆ°èŠ±è´¹æœ€å°çš„åŠ å…¥å½“å‰é˜Ÿåˆ—
         //
 
         public bool IsFinish()

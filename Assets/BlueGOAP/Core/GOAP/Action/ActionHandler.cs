@@ -1,12 +1,13 @@
-
+ï»¿
 using System;
+using BlueGOAPTest;
 
 namespace BlueGOAP
 {
-    public abstract class ActionHandlerBase<TAction> : IActionHandler<TAction>
+    public abstract class ActionHandlerBase<TAction, TGoal> : IActionHandler<TAction>
     {
         /// <summary>
-        /// ¶¯×÷
+        /// åŠ¨ä½œ
         /// </summary>
         public IAction<TAction> Action { get; private set; }
 
@@ -14,9 +15,19 @@ namespace BlueGOAP
             get { return Action.Label; }
         }
 
-        public ActionHandlerBase(IAction<TAction> action)
+        protected IAgent<TAction, TGoal> _agent;
+        private IAction<ActionEnum> action;
+        protected System.Action _onFinishAction;
+
+        public ActionHandlerBase(IAgent<TAction, TGoal> agent,IAction<TAction> action)
         {
+            _agent = agent;
             Action = action;
+        }
+
+        protected void SetAgentState<TKey>(TKey key,bool value)
+        {
+            _agent.AgentState.SetState(key.ToString(), value);
         }
 
         public bool CanPerformAction()
@@ -26,7 +37,7 @@ namespace BlueGOAP
 
         public void AddFinishAction(Action onFinishAction)
         {
-            Action.AddFinishAction(onFinishAction);
+            _onFinishAction = onFinishAction;
         }
 
         public abstract void Enter();

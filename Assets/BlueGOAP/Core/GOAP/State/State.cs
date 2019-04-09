@@ -1,4 +1,4 @@
-
+﻿
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,16 +19,19 @@ namespace BlueGOAP
         {
             if (_dataTable.ContainsKey(key) && _dataTable[key] != value)
             {
-                if (_onChange != null )
-                    _onChange();
+                ChangeValue(key, value);
             }
             else if(!_dataTable.ContainsKey(key))
             {
-                if (_onChange != null)
-                    _onChange();
+                ChangeValue(key, value);
             }
+        }
 
+        private void ChangeValue(string key, bool value)
+        {
             _dataTable[key] = value;
+            if (_onChange != null)
+                _onChange();
         }
 
         public void AddStateChangeListener(Action onChange)
@@ -36,12 +39,12 @@ namespace BlueGOAP
             _onChange = onChange;
         }
 
-        public IState GetSameData(IState goalState)
+        public IState GetSameData(IState otherState)
         {
             IState data = new State();
             foreach (var entry in _dataTable)
             {
-                if (goalState.ContainKey(entry.Key))
+                if (otherState.ContainKey(entry.Key))
                 {
                     data.SetState(entry.Key, _dataTable[entry.Key]);
                 }
@@ -77,7 +80,7 @@ namespace BlueGOAP
             List<string> keys = new List<string>();
             foreach (var key in otherState.GetKeys())
             {
-                if (otherState.GetValue(key) != _dataTable[key])
+                if (!_dataTable.ContainsKey(key) || otherState.GetValue(key) != _dataTable[key])
                 {
                     keys.Add(key);
                 }

@@ -1,4 +1,4 @@
-
+﻿
 namespace BlueGOAP
 {
     public class Tree<TAction>
@@ -10,6 +10,7 @@ namespace BlueGOAP
 
         public TreeNode<TAction> CreateTopNode()
         {
+            TreeNode<TAction>.ResetID();
             return new TreeNode<TAction>(null);
         }
     }

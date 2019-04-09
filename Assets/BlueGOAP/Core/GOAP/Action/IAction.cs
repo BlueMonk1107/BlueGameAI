@@ -1,37 +1,32 @@
-namespace BlueGOAP
+ï»¿namespace BlueGOAP
 {
     public interface IAction<TAction>
     {
         /// <summary>
-        /// µ±Ç°¶¯×÷µÄ±êÇ©
+        /// å½“å‰åŠ¨ä½œçš„æ ‡ç­¾
         /// </summary>
         TAction Label { get; }
         /// <summary>
-        /// ¶¯×÷»¨·Ñ Ä¬ÈÏÎª1
+        /// åŠ¨ä½œèŠ±è´¹ é»˜è®¤ä¸º1
         /// </summary>
         int Cost { get; }
         /// <summary>
-        /// ¶¯×÷Ö´ĞĞµÄÓÅÏÈ¼¶ Ä¬ÈÏÎª0
+        /// åŠ¨ä½œæ‰§è¡Œçš„ä¼˜å…ˆçº§ é»˜è®¤ä¸º0
         /// </summary>
         int Precedence { get; }
         /// <summary>
-        /// Ö´ĞĞ¶¯×÷µÄÏÈ¾öÌõ¼ş
+        /// æ‰§è¡ŒåŠ¨ä½œçš„å…ˆå†³æ¡ä»¶
         /// </summary>
         IState Preconditions { get; }
 
         /// <summary>
-        /// ¶¯×÷Ö´ĞĞºóµÄ×´Ì¬
+        /// åŠ¨ä½œæ‰§è¡Œåçš„çŠ¶æ€
         /// </summary>
         IState Effects { get; }
         /// <summary>
-        /// ÑéÖ¤ÏÈ¾öÌõ¼ş
+        /// éªŒè¯å…ˆå†³æ¡ä»¶
         /// </summary>
         /// <returns></returns>
         bool VerifyPreconditions();
-        /// <summary>
-        /// Ìí¼Ó¶¯×÷Íê³É»Øµ÷
-        /// </summary>
-        /// <param name="onFinishAction"></param>
-        void AddFinishAction(System.Action onFinishAction);
     }
 }

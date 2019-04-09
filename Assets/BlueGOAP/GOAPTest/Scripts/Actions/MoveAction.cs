@@ -1,4 +1,4 @@
-
+﻿
 using BlueGOAP;
 
 namespace BlueGOAPTest
@@ -16,6 +16,7 @@ namespace BlueGOAPTest
         protected override IState InitPreconditions()
         {
             State<KeyNameEnum> effects = new State<KeyNameEnum>();
+            effects.SetState(KeyNameEnum.FIND_ENEMY, true);
             effects.SetState(KeyNameEnum.NEAR_ENEMY, false);
             return effects;
         }

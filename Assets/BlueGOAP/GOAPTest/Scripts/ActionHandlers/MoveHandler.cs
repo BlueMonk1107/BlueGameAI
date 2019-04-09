@@ -1,17 +1,17 @@
-
+ï»¿
 using BlueGOAP;
 
 namespace BlueGOAPTest
 {
-    public class MoveHandler : ActionHandlerBase<ActionEnum>
+    public class MoveHandler : ActionHandlerBase<ActionEnum, GoalEnum>
     {
-        public MoveHandler(IAction<ActionEnum> action) : base(action)
+        public MoveHandler(IAgent<ActionEnum, GoalEnum> agent, IAction<ActionEnum> action) : base(agent,action)
         {
         }
 
         public override void Enter()
         {
-            DebugMsg.Log("½øÈëÒÆ¶¯×´Ì¬");
+            DebugMsg.Log("è¿›å…¥ç§»åŠ¨çŠ¶æ€");
         }
 
         public override void Execute()

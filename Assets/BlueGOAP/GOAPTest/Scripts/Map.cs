@@ -1,4 +1,4 @@
-
+﻿
 using BlueGOAP;
 
 namespace BlueGOAPTest
@@ -11,16 +11,17 @@ namespace BlueGOAPTest
 
         protected override void InitActinMaps()
         {
-            AddAction(new IdleHandler(new IdleAction(_agent)));
-            AddAction(new AttackHandler(new AttackAction(_agent)));
-            AddAction(new InjureHandler(new InjureAction(_agent)));
-            AddAction(new MoveHandler(new MoveAction(_agent)));
+            AddAction(new AlertHandler(_agent,new AlertAction(_agent)));
+            AddAction(new AttackHandler(_agent, new AttackAction(_agent)));
+            AddAction(new InjureHandler(_agent, new InjureAction(_agent)));
+            AddAction(new MoveHandler(_agent, new MoveAction(_agent)));
         }
 
         protected override void InitGoalMaps()
         {
             AddGoal(new AttackGoal(_agent));
-            AddGoal(new IdleGoal(_agent));
+            AddGoal(new AlertGoal(_agent));
+            AddGoal(new MoveGoal(_agent));
         }
     }
 }

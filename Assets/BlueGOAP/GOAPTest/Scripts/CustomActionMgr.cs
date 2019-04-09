@@ -12,7 +12,7 @@ namespace BlueGOAPTest
         protected override void InitActionHandlers()
         {
             AddHandler(ActionEnum.ATTACK);
-            AddHandler(ActionEnum.IDLE);
+            AddHandler(ActionEnum.Alert);
             AddHandler(ActionEnum.INJURE);
             AddHandler(ActionEnum.MOVE);
         }

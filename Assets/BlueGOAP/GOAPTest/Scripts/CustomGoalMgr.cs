@@ -12,7 +12,8 @@ namespace BlueGOAPTest
         protected override void InitGoals()
         {
             AddGoal(GoalEnum.ATTACK);
-            AddGoal(GoalEnum.IDLE);
+            AddGoal(GoalEnum.ALERT);
+            AddGoal(GoalEnum.MOVE);
         }
     }
 }

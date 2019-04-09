@@ -1,4 +1,4 @@
-
+ï»¿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ namespace BlueGOAP
         private Dictionary<TAction, IActionHandler<TAction>> _handlerDic;
         private IFSM<TAction> _fsm;
         private IAgent<TAction, TGoal> _agent;
-        //Ğ§¹ûµÄ¼üÖµºÍ¶¯×÷µÄÓ³Éä¹ØÏµ
+        //æ•ˆæœçš„é”®å€¼å’ŒåŠ¨ä½œçš„æ˜ å°„å…³ç³»
         public bool IsPerformAction { get; set; }
         public Dictionary<string, HashSet<IActionHandler<TAction>>> EffectsAndActionMap { get; private set; }
         private Action _onActionComplete;
@@ -26,10 +26,13 @@ namespace BlueGOAP
         }
 
         /// <summary>
-        /// ³õÊ¼»¯µ±Ç°´úÀíµÄ¶¯×÷´¦ÀíÆ÷
+        /// åˆå§‹åŒ–å½“å‰ä»£ç†çš„åŠ¨ä½œå¤„ç†å™¨
         /// </summary>
         protected abstract void InitActionHandlers();
 
+        /// <summary>
+        /// åˆå§‹åŒ–åŠ¨ä½œå’ŒåŠ¨ä½œå½±å“çš„æ˜ å°„
+        /// </summary>
         private void InitEffectsAndActionMap()
         {
             EffectsAndActionMap = new Dictionary<string, HashSet<IActionHandler<TAction>>>();
@@ -57,7 +60,7 @@ namespace BlueGOAP
             if (handler != null)
             {
                 _handlerDic.Add(actionLabel, handler);
-                handler.AddFinishAction(_onActionComplete);
+                handler.AddFinishAction(()=>_onActionComplete());
             }
         }
 

@@ -1,4 +1,4 @@
-
+ï»¿
 namespace BlueGOAP
 {
     public class Performer<TAction, TGoal> : IPerformer
@@ -22,14 +22,15 @@ namespace BlueGOAP
         {
             if (WhetherToReplan())
             {
+                DebugMsg.Log("å¼€å§‹åˆ¶å®šè®¡åˆ’å¹¶å¼€å§‹è®¡åˆ’çš„æµç¨‹");
                 BuildPlanAndStart();
             }
         }
 
-        //ÖÆ¶¨¼Æ»®²¢¿ªÊ¼¼Æ»®
+        //åˆ¶å®šè®¡åˆ’å¹¶å¼€å§‹è®¡åˆ’
         private void BuildPlanAndStart()
         {
-            //ÈôÄ¿±êÍê³ÉÔòÖØĞÂÑ°ÕÒÄ¿±ê
+            //è‹¥ç›®æ ‡å®Œæˆåˆ™é‡æ–°å¯»æ‰¾ç›®æ ‡
             var plan = _planner.BuildPlan(_goalManager.CurrentGoal);
             if (plan != null && plan.Count > 0)
             {
@@ -39,23 +40,25 @@ namespace BlueGOAP
             }
         }
 
-        //¼Æ»®Íê³É
+        //è®¡åˆ’å®Œæˆ
         private void PlanComplete()
         {
             _actionManager.IsPerformAction = false;
-            BuildPlanAndStart();
+            DebugMsg.Log(_goalManager.CurrentGoal.Label.ToString());
+            //BuildPlanAndStart();
         }
 
-        //¼Æ»®Íê³ÉÁËµ±Ç°¶¯×÷
+        //è®¡åˆ’å®Œæˆäº†å½“å‰åŠ¨ä½œ
         private void PlanActionComplete()
         {
+            DebugMsg.Log("ä¸‹ä¸€æ­¥");
             _planHandler.NextAction();
         }
 
-        //¼ì²âÊÇ·ñĞèÒªÖØĞÂÖÆ¶¨¼Æ»®
+        //æ£€æµ‹æ˜¯å¦éœ€è¦é‡æ–°åˆ¶å®šè®¡åˆ’
         private bool WhetherToReplan()
         {
-            //µ±Ç°¼Æ»®ÊÇ·ñÕıÔÚÖ´ĞĞ
+            //å½“å‰è®¡åˆ’æ˜¯å¦æ­£åœ¨æ‰§è¡Œ
             if (_planHandler.InProgress)
             {
                 return false;

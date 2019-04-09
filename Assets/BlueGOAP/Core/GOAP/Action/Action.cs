@@ -1,33 +1,31 @@
-
+ï»¿
 namespace BlueGOAP
 {
     public abstract class ActionBase<TAction, TGoal> : IAction<TAction>
     {
         public abstract TAction Label { get; }
         public abstract int Cost { get; }
-        public abstract int Precedence { get;}
+        public abstract int Precedence { get; }
 
         /// <summary>
-        /// Ö´ĞĞ¶¯×÷µÄÏÈ¾öÌõ¼ş
+        /// æ‰§è¡ŒåŠ¨ä½œçš„å…ˆå†³æ¡ä»¶
         /// </summary>
         public IState Preconditions { get; private set; }
 
         /// <summary>
-        /// ¶¯×÷Ö´ĞĞºóµÄ×´Ì¬
+        /// åŠ¨ä½œæ‰§è¡Œåçš„çŠ¶æ€
         /// </summary>
         public IState Effects { get; private set; }
 
         /// <summary>
-        /// µ±Ç°¶¯×÷µÄ´úÀí
+        /// å½“å‰åŠ¨ä½œçš„ä»£ç†
         /// </summary>
         protected IAgent<TAction, TGoal> _agent;
-        
+
         /// <summary>
-        /// µ±Ç°¶¯×÷ÊÇ·ñÄÜ¹»ÖĞ¶Ï
+        /// å½“å‰åŠ¨ä½œæ˜¯å¦èƒ½å¤Ÿä¸­æ–­
         /// </summary>
         protected bool _interruptible;
-
-        protected System.Action _onFinishAction;
 
         public ActionBase(IAgent<TAction, TGoal> agent)
         {
@@ -37,19 +35,19 @@ namespace BlueGOAP
         }
 
         /// <summary>
-        /// ³õÊ¼»¯ÏÈ¾öÌõ¼ş
+        /// åˆå§‹åŒ–å…ˆå†³æ¡ä»¶
         /// </summary>
         /// <returns></returns>
         protected abstract IState InitPreconditions();
 
         /// <summary>
-        /// ³õÊ¼»¯¶¯×÷²úÉúµÄÓ°Ïì
+        /// åˆå§‹åŒ–åŠ¨ä½œäº§ç”Ÿçš„å½±å“
         /// </summary>
         /// <returns></returns>
         protected abstract IState InitEffects();
 
         /// <summary>
-        /// ÑéÖ¤ÏÈ¾öÌõ¼ş
+        /// éªŒè¯å…ˆå†³æ¡ä»¶
         /// </summary>
         /// <returns></returns>
         public bool VerifyPreconditions()
@@ -57,9 +55,5 @@ namespace BlueGOAP
             return _agent.AgentState.ContainState(Preconditions);
         }
 
-        public void AddFinishAction(System.Action onFinishAction)
-        {
-            _onFinishAction = onFinishAction;
-        }
     }
 }

@@ -18,6 +18,7 @@ namespace BlueGOAP
 
         public void Init(IActionManager<TAction> actionManager, Queue<IActionHandler<TAction>> plan)
         {
+            _actionManager = actionManager;
             _plan = plan;
             InProgress = false;
         }

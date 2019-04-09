@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 
 namespace BlueGOAP
@@ -18,18 +18,15 @@ namespace BlueGOAP
             _lastActiveState = false;
         }
 
-        public virtual float GetPriority()
-        {
-            return 1;
-        }
+        public abstract float GetPriority();
 
         /// <summary>
-        /// »ñÈ¡Ä¿±ê¶Ô×´Ì¬µÄÓ°Ïì
+        /// è·å–ç›®æ ‡å¯¹çŠ¶æ€çš„å½±å“
         /// </summary>
         public abstract IState GetEffects();
 
         /// <summary>
-        /// »ñÈ¡´úÀí×´Ì¬µÄÖµ
+        /// è·å–ä»£ç†çŠ¶æ€çš„å€¼
         /// </summary>
         /// <typeparam name="Tkey"></typeparam>
         /// <param name="key"></param>
@@ -40,7 +37,7 @@ namespace BlueGOAP
         }
 
         /// <summary>
-        /// ÊÇ·ñÒÑ¾­ÊµÏÖÄ¿±ê
+        /// æ˜¯å¦å·²ç»å®ç°ç›®æ ‡
         /// </summary>
         public abstract bool IsGoalComplete();
 
@@ -70,7 +67,7 @@ namespace BlueGOAP
             }
         }
         /// <summary>
-        /// µ±Ç°GoalµÄ¼¤»îÌõ¼ş
+        /// å½“å‰Goalçš„æ¿€æ´»æ¡ä»¶
         /// </summary>
         /// <returns></returns>
         protected abstract bool ActiveCondition();

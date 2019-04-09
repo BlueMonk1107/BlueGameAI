@@ -1,17 +1,21 @@
-
+﻿
 namespace BlueGOAP
 {
     public class TreeNode<TAction>
     {
+        /// <summary>
+        /// 节点的默认ID
+        /// </summary>
+        public const int DEFAULT_ID = 0;
         private static int _id;
         public int ID { get; private set; }
         /// <summary>
-        /// Ĭ���޸��ڵ㣬ֵΪnull
+        /// 默认无父节点，值为null
         /// </summary>
         public TreeNode<TAction> ParentNode { get; set; }
 
         public IActionHandler<TAction> ActionHandler { get; private set; }
-        public IState CurrentState { get; set; }
+        public IState CurrentState { get;  set; }
         public IState GoalState { get; set; }
 
         public int Cost { get; set; }
@@ -22,6 +26,13 @@ namespace BlueGOAP
             ActionHandler = handler;
             Cost = 0;
             ParentNode = null;
+            CurrentState = new State();
+            GoalState = new State();
+        }
+
+        public static void ResetID()
+        {
+            _id = DEFAULT_ID;
         }
     }
 }

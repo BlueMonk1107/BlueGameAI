@@ -1,10 +1,10 @@
-
+ï»¿
 using System.Collections.Generic;
 
 namespace BlueGOAP
 {
-    //½á¹ûÊÇ´óÓÚ0µÄ£¬µÚÒ»¸öÊı´ó
-    //¾ÍÊÇÊı×éÊÇÓÉ´óµ½Ğ¡ÅÅÁĞµÄ
+    //ç»“æœæ˜¯å¤§äº0çš„ï¼Œç¬¬ä¸€ä¸ªæ•°å¤§
+    //å°±æ˜¯æ•°ç»„æ˜¯ç”±å¤§åˆ°å°æ’åˆ—çš„
     public class ComparerGoal<TGoal> : IComparer<IGoal<TGoal>>
     {
         public int Compare(IGoal<TGoal> x, IGoal<TGoal> y)
@@ -18,19 +18,18 @@ namespace BlueGOAP
         private IAgent<TAction, TGoal> _agent;
         public IGoal<TGoal> CurrentGoal { get; private set; }
         private List<IGoal<TGoal>> _activeGoals;
-        private IGoal<TGoal> _currentGoal;
 
         public GoalManagerBase(IAgent<TAction, TGoal> agent)
         {
             _agent = agent;
-            _currentGoal = null;
+            CurrentGoal = null;
             _goalsDic = new Dictionary<TGoal, IGoal<TGoal>>();
             _activeGoals = new List<IGoal<TGoal>>();
             InitGoals();
         }
 
         /// <summary>
-        /// ³õÊ¼»¯µ±Ç°´úÀíµÄÄ¿±ê
+        /// åˆå§‹åŒ–å½“å‰ä»£ç†çš„ç›®æ ‡
         /// </summary>
         protected abstract void InitGoals();
 
@@ -68,7 +67,7 @@ namespace BlueGOAP
 
         public IGoal<TGoal> FindGoal()
         {
-            //²éÕÒÓÅÏÈ¼¶×î´óµÄÄÇ¸ö
+            //æŸ¥æ‰¾ä¼˜å…ˆçº§æœ€å¤§çš„é‚£ä¸ª
             SortGoalList();
             if (_activeGoals.Count > 0)
             {
@@ -82,10 +81,11 @@ namespace BlueGOAP
 
         public void UpdateData()
         {
+            DebugMsg.Log("GoalManager UpdateData");
             UpdateGoals();
             UpdateCurrentGoal();
         }
-        //¸üĞÂËùÓĞGoalµÄĞÅÏ¢
+        //æ›´æ–°æ‰€æœ‰Goalçš„ä¿¡æ¯
         private void UpdateGoals()
         {
             foreach (KeyValuePair<TGoal, IGoal<TGoal>> goal in _goalsDic)
@@ -93,13 +93,14 @@ namespace BlueGOAP
                 goal.Value.Update();
             }
         }
-        //¸üĞÂ_currentGoal¶ÔÏó
+        //æ›´æ–°CurrentGoalå¯¹è±¡
         private void UpdateCurrentGoal()
         {
-            if (_currentGoal == null)
-            {
-                _currentGoal = FindGoal();
-            }
+            CurrentGoal = FindGoal();
+            if (CurrentGoal != null)
+                DebugMsg.Log("CurrentGoal:" + CurrentGoal.Label.ToString());
+            else
+                DebugMsg.Log("CurrentGoal is null");
         }
     }
 }

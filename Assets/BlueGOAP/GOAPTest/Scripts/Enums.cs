@@ -3,7 +3,7 @@ namespace BlueGOAPTest
 {
     public enum ActionEnum
     {
-        IDLE,
+        Alert,
         MOVE,
         ATTACK,
         INJURE
@@ -11,8 +11,18 @@ namespace BlueGOAPTest
 
     public enum GoalEnum
     {
+        /// <summary>
+        /// ¹¥»÷
+        /// </summary>
         ATTACK,
-        IDLE
+        /// <summary>
+        /// ¾¯½ä
+        /// </summary>
+        ALERT,
+        /// <summary>
+        /// ÒÆ¶¯
+        /// </summary>
+        MOVE
     }
     
     public enum KeyNameEnum
