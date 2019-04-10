@@ -414,7 +414,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u6F14\u793A\u903B\u8F91\n1\uFF09\u654C\u4EBA\u4F1A\u5728\u539F\u5730\u5F85\u673A\n2\uFF09\u53D1\u73B0\u6709\u4EBA\u8FDB\u5165\u653B\u51FB\u8303\u56F4\u5C31\u8FDB\u884C\u653B\u51FB\n3\uFF09\u653B\u51FB\u4E00\u6B21\u4E4B\u540E\u5F85\u673A\u4E24\u79D2\uFF0C\u8FDB\u884C\u4E0B\u6B21\u653B\u51FB"
+  m_Text: "\u6F14\u793A\u903B\u8F91\n1\uFF09\u654C\u4EBA\u4F1A\u5728\u539F\u5730\u5F85\u673A\n2\uFF09\u53D1\u73B0\u6709\u4EBA\u8FDB\u5165\u653B\u51FB\u8303\u56F4\u5C31\u8FDB\u884C\u653B\u51FB\n3\uFF09\u653B\u51FB\u4E00\u6B21\u4E4B\u540E\u5F85\u673A\u4E24\u79D2\uFF0C\u8FDB\u884C\u4E0B\u6B21\u653B\u51FB\n\u64CD\u4F5C\uFF1Aaswd\u64CD\u4F5C\u4EBA\u7269\u79FB\u52A8"
 --- !u!222 &203228558
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -678,7 +678,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 275.7}
+  m_SizeDelta: {x: 0, y: 298.8}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1126588559
 MonoBehaviour:
