@@ -1,4 +1,5 @@
 ﻿
+using BlueGOAP;
 using UnityEngine;
 
 namespace BlueGOAPTest
@@ -7,9 +8,11 @@ namespace BlueGOAPTest
     {
         private CharacterController _controller;
         private float _speed = 5;
+        private Agent<ActionEnum, GoalEnum> _enemyAgent;
         public void Start()
         {
             _controller = GetComponent<CharacterController>();
+            _enemyAgent = ObjectsInScene.Instance.Enemy.GetComponent<Root>().Agent;
         }
 
         public void Update()
@@ -29,6 +32,10 @@ namespace BlueGOAPTest
             if (Input.GetKey(KeyCode.D))
             {
                 _controller.SimpleMove(Vector3.right * _speed);
+            }
+            if (Input.GetKey(KeyCode.K))
+            {
+                _enemyAgent.AgentState.SetState(KeyNameEnum.INJURE.ToString(), true);
             }
         }
     }

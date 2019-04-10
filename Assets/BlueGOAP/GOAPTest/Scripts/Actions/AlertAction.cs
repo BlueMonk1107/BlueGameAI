@@ -5,9 +5,11 @@ namespace BlueGOAPTest
 {
     public class AlertAction : ActionBase<ActionEnum, GoalEnum>
     {
-        public override ActionEnum Label { get { return ActionEnum.Alert; } }
+        public override ActionEnum Label { get { return ActionEnum.ALERT; } }
         public override int Cost { get { return 1; } }
         public override int Priority { get { return 0; } }
+
+        public override bool CanInterruptiblePlan { get { return false; } }
 
         public AlertAction(IAgent<ActionEnum, GoalEnum> agent) : base(agent)
         {

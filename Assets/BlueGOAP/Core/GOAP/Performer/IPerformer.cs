@@ -1,11 +1,15 @@
-
+ï»¿
 namespace BlueGOAP
 {
     public interface IPerformer
     {
         /// <summary>
-        /// ¸üĞÂÊı¾İº¯Êı
+        /// æ›´æ–°æ•°æ®å‡½æ•°
         /// </summary>
         void UpdateData();
+        /// <summary>
+        /// ä¸­æ–­è®¡åˆ’
+        /// </summary>
+        void Interruptible();
     }
 }

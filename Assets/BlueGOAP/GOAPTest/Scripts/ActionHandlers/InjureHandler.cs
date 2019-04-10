@@ -1,4 +1,6 @@
 ﻿
+using System;
+using System.Threading.Tasks;
 using BlueGOAP;
 
 namespace BlueGOAPTest
@@ -9,18 +11,11 @@ namespace BlueGOAPTest
         {
         }
 
-        public override void Enter()
+        public async override void Enter()
         {
             DebugMsg.Log("进入受伤状态");
-        }
-
-        public override void Execute()
-        {
-        }
-
-        public override void Exit()
-        {
-            base.Exit();
+            await Task.Delay(TimeSpan.FromSeconds(2));
+            OnComplete();
         }
     }
 }

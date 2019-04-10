@@ -41,6 +41,10 @@ namespace BlueGOAP
         /// </summary>
         void FrameFun();
         /// <summary>
+        /// 更新数据
+        /// </summary>
+        void UpdateData();
+        /// <summary>
         /// 改变当前执行的动作
         /// </summary>
         /// <param name="actionLabel"></param>

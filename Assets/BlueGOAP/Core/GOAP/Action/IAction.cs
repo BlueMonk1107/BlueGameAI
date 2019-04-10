@@ -15,6 +15,10 @@
         /// </summary>
         int Priority { get; }
         /// <summary>
+        /// 当前动作是否能够中断
+        /// </summary>
+        bool CanInterruptiblePlan { get; }
+        /// <summary>
         /// 执行动作的先决条件
         /// </summary>
         IState Preconditions { get; }

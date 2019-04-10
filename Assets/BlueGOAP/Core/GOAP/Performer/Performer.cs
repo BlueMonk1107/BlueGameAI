@@ -27,6 +27,12 @@ namespace BlueGOAP
             }
         }
 
+        public void Interruptible()
+        {
+            DebugMsg.Log("打断计划");
+            _planHandler.Interruptible();
+        }
+
         //制定计划并开始计划
         private void BuildPlanAndStart()
         {

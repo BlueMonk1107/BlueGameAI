@@ -25,6 +25,7 @@ namespace BlueGOAPTest
             AddGoal(new AlertGoal(_agent));
             AddGoal(new MoveGoal(_agent));
             AddGoal(new AttackIdleGoal(_agent));
+            AddGoal(new InjureGoal(_agent));
         }
 
         protected override void InitGameData()

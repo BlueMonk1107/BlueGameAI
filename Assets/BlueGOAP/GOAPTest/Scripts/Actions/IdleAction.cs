@@ -8,6 +8,7 @@ namespace BlueGOAPTest
         public override ActionEnum Label { get { return ActionEnum.IDLE; } }
         public override int Cost { get { return 1; } }
         public override int Priority { get { return 0; } }
+        public override bool CanInterruptiblePlan { get { return false; } }
 
         public IdleAction(IAgent<ActionEnum, GoalEnum> agent) : base(agent)
         {

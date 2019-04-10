@@ -17,11 +17,6 @@ namespace BlueGOAP
             _plan = new Queue<IActionHandler<TAction>>();
         }
 
-        public IAction<TAction> GetCurrentAction()
-        {
-            return null;
-        }
-
         public Queue<IActionHandler<TAction>> BuildPlan(IGoal<TGoal> goal)
         {
             DebugMsg.Log("制定计划");
@@ -195,21 +190,6 @@ namespace BlueGOAP
             //进行优先级排序
             handlers = handlers.OrderByDescending(u => u.Action.Priority).ToList();
             return handlers;
-        }
-
-        //先根据差异的键值获取对应的acton
-        //然后检测action的执行条件是否满足
-        //满足就找到花费最小的加入当前队列
-        //
-
-        public bool IsFinish()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Interruptible()
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

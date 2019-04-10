@@ -15,6 +15,7 @@ namespace BlueGOAPTest
             AddGoal(GoalEnum.ALERT);
             AddGoal(GoalEnum.MOVE);
             AddGoal(GoalEnum.ATTACK_IDLE);
+            AddGoal(GoalEnum.INJURE);
         }
     }
 }

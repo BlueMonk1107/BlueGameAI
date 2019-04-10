@@ -25,5 +25,9 @@ namespace BlueGOAP
         /// 执行下一个动作
         /// </summary>
         void NextAction();
+        /// <summary>
+        /// 中断计划
+        /// </summary>
+        void Interruptible();
     }
 }

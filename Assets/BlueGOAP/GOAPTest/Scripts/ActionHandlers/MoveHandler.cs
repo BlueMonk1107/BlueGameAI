@@ -9,7 +9,7 @@ namespace BlueGOAPTest
         private Transform _self, _enemy;
         private CharacterController _controller;
         private float _speed = 4;
-        public MoveHandler(IAgent<ActionEnum, GoalEnum> agent, IAction<ActionEnum> action) : base(agent,action)
+        public MoveHandler(IAgent<ActionEnum, GoalEnum> agent, IAction<ActionEnum> action) : base(agent, action)
         {
         }
 
@@ -25,7 +25,7 @@ namespace BlueGOAPTest
         public override void Execute()
         {
             base.Execute();
-            if (Vector3.Distance(_self.position, _enemy.position)>1.5f)
+            if (Vector3.Distance(_self.position, _enemy.position) > 1.5f)
             {
                 Vector3 dirToEnemy = (_enemy.position - _self.position).normalized;
                 _controller.SimpleMove(dirToEnemy * _speed);

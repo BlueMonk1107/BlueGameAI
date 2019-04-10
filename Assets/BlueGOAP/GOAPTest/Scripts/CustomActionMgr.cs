@@ -12,7 +12,7 @@ namespace BlueGOAPTest
         protected override void InitActionHandlers()
         {
             AddHandler(ActionEnum.ATTACK);
-            AddHandler(ActionEnum.Alert);
+            AddHandler(ActionEnum.ALERT);
             AddHandler(ActionEnum.INJURE);
             AddHandler(ActionEnum.MOVE);
             AddHandler(ActionEnum.ATTACK_IDLE);
@@ -20,7 +20,7 @@ namespace BlueGOAPTest
 
         public override ActionEnum GetDefaultActionLabel()
         {
-            return ActionEnum.Alert;
+            return ActionEnum.ALERT;
         }
     }
 }

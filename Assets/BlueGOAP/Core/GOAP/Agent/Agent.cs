@@ -35,6 +35,9 @@ namespace BlueGOAP
 
         public void UpdateData()
         {
+            if (ActionManager != null)
+                ActionManager.UpdateData();
+
             if (GoalManager != null)
                 GoalManager.UpdateData();
 

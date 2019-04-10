@@ -5,7 +5,7 @@ namespace BlueGOAPTest
     {
         IDLE,
         ATTACK_IDLE,
-        Alert,
+        ALERT,
         MOVE,
         ATTACK,
         INJURE
@@ -29,6 +29,11 @@ namespace BlueGOAPTest
         /// 战斗待机
         /// </summary>
         ATTACK_IDLE,
+        /// <summary>
+        /// 受伤
+        /// </summary>
+        INJURE,
+
     }
     
     public enum KeyNameEnum

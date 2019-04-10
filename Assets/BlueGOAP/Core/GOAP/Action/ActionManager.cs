@@ -8,6 +8,10 @@ namespace BlueGOAP
     public abstract class ActionManagerBase<TAction, TGoal> : IActionManager<TAction>
     {
         private Dictionary<TAction, IActionHandler<TAction>> _handlerDic;
+        /// <summary>
+        /// 能够打断计划的动作
+        /// </summary>
+        private List<IActionHandler<TAction>> _interruptibleHandlers;
         private IFSM<TAction> _fsm;
         private IAgent<TAction, TGoal> _agent;
         //效果的键值和动作的映射关系
@@ -19,10 +23,12 @@ namespace BlueGOAP
         {
             _agent = agent;
             _handlerDic = new Dictionary<TAction, IActionHandler<TAction>>();
+            _interruptibleHandlers = new List<IActionHandler<TAction>>();
             _fsm = new FSM<TAction>();
             InitActionHandlers();
             InitFsm();
             InitEffectsAndActionMap();
+            InitInterruptibleDic();
         }
 
         /// <summary>
@@ -52,6 +58,21 @@ namespace BlueGOAP
                     EffectsAndActionMap[key].Add(handler.Value);
                 }
             }
+        }
+        /// <summary>
+        /// 初始化能够打断计划的动作缓存
+        /// </summary>
+        private void InitInterruptibleDic()
+        {
+            foreach (KeyValuePair<TAction, IActionHandler<TAction>> handler in _handlerDic)
+            {
+                if (handler.Value.Action.CanInterruptiblePlan)
+                {
+                    _interruptibleHandlers.Add( handler.Value);
+                }
+            }
+            //按照优先级排序
+            _interruptibleHandlers = _interruptibleHandlers.OrderByDescending(u => u.Action.Priority).ToList();
         }
 
         public abstract TAction GetDefaultActionLabel();
@@ -86,6 +107,19 @@ namespace BlueGOAP
         {
             if (IsPerformAction)
                 _fsm.FrameFun();
+        }
+
+        public void UpdateData()
+        {
+            foreach (var handler in _interruptibleHandlers)
+            {
+                if (handler.CanPerformAction())
+                {
+                    DebugMsg.LogError(handler.Label+"打断计划");
+                    _agent.Performer.Interruptible();
+                    break;
+                }
+            }
         }
 
         public void ChangeCurrentAction(TAction actionLabel)

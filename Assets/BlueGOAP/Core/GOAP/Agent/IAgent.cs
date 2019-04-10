@@ -1,33 +1,37 @@
-
+ï»¿
 namespace BlueGOAP
 {
     public interface IAgent<TAction, TGoal>
     {
         /// <summary>
-        /// µ±Ç°×´Ì¬
+        /// å½“å‰çŠ¶æ€
         /// </summary>
         IState AgentState { get; }
         /// <summary>
-        /// »ñÈ¡Ó³ÉäÊı¾İ¶ÔÏó
+        /// è·å–æ˜ å°„æ•°æ®å¯¹è±¡
         /// </summary>
         /// <returns></returns>
         IMaps<TAction, TGoal> Maps { get; }
         /// <summary>
-        /// »ñÈ¡¶¯×÷¹ÜÀíÀà¶ÔÏó
+        /// è·å–åŠ¨ä½œç®¡ç†ç±»å¯¹è±¡
         /// </summary>
         /// <returns></returns>
         IActionManager<TAction> ActionManager { get; }
         /// <summary>
-        /// »ñÈ¡Ä¿±ê¹ÜÀíÀà¶ÔÏó
+        /// è·å–ç›®æ ‡ç®¡ç†ç±»å¯¹è±¡
         /// </summary>
         /// <returns></returns>
         IGoalManager<TGoal> GoalManager { get; }
         /// <summary>
-        /// ¸üĞÂÊı¾İº¯Êı
+        /// è®¡åˆ’æ‰§è¡Œå™¨
+        /// </summary>
+        IPerformer Performer { get;}
+        /// <summary>
+        /// æ›´æ–°æ•°æ®å‡½æ•°
         /// </summary>
         void UpdateData();
         /// <summary>
-        /// Ö¡º¯Êı
+        /// å¸§å‡½æ•°
         /// </summary>
         void FrameFun();
     }

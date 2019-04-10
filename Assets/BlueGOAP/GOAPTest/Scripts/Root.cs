@@ -1,20 +1,30 @@
-using BlueGOAP;
+﻿using BlueGOAP;
 using UnityEngine;
 
 namespace BlueGOAPTest
 {
     public class Root : MonoBehaviour
     {
-        private Agent<ActionEnum, GoalEnum> _agent;
+        public Agent<ActionEnum, GoalEnum> Agent { get; private set; }
 
         public void Start()
         {
-            _agent = new CustomAgent();
+            Agent = new CustomAgent();
+            gameObject.AddComponent<UnityTrigger>().AddCollideCallBack(UnityTriggerCallBack);
         }
 
         public void FixedUpdate()
         {
-            _agent.FrameFun();
+            Agent.FrameFun();
+        }
+
+        /// <summary>
+        /// 这里响应unity中的碰撞事件
+        /// </summary>
+        /// <param name="collider"></param>
+        private void UnityTriggerCallBack(Collider collider)
+        {
+            
         }
     }
 }

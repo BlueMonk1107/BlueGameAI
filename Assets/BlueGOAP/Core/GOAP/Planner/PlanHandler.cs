@@ -10,10 +10,14 @@ namespace BlueGOAP
         private IActionManager<TAction> _actionManager;
         private Action _onComplete;
         private IActionHandler<TAction> _currentActionHandler;
+        private bool _isInterruptible;
 
         public bool IsComplete {
             get
             {
+                if (_isInterruptible)
+                    return true;
+
                 if (_plan == null)
                 {
                     return true;
@@ -32,6 +36,7 @@ namespace BlueGOAP
 
         public void Init(IActionManager<TAction> actionManager, Queue<IActionHandler<TAction>> plan)
         {
+            _isInterruptible = false;
             _currentActionHandler = null;
             _actionManager = actionManager;
             _plan = plan;
@@ -60,6 +65,11 @@ namespace BlueGOAP
                 DebugMsg.Log("----当前执行动作:"+ label);
                 _actionManager.ChangeCurrentAction(label);
             }
+        }
+
+        public void Interruptible()
+        {
+            _isInterruptible = true;
         }
     }
 }

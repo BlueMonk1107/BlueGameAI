@@ -8,6 +8,7 @@ namespace BlueGOAPTest
         public override ActionEnum Label { get { return ActionEnum.MOVE; } }
         public override int Cost { get { return 5; } }
         public override int Priority { get { return 70; } }
+        public override bool CanInterruptiblePlan { get { return false; } }
 
         public MoveAction(IAgent<ActionEnum, GoalEnum> agent) : base(agent)
         {
