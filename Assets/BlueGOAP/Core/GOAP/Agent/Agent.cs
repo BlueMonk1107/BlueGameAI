@@ -1,4 +1,4 @@
-
+﻿
 namespace BlueGOAP
 {
     public abstract class Agent<TAction, TGoal> : IAgent<TAction, TGoal>
@@ -22,9 +22,10 @@ namespace BlueGOAP
             GoalManager = InitGoalManager();
             _triggerManager = InitTriggerManager();
             Performer = new Performer<TAction, TGoal>(this);
-
+            
             AgentState.AddStateChangeListener(UpdateData);
         }
+
         protected abstract IState InitAgentState();
         protected abstract IMaps<TAction, TGoal> InitMaps();
         protected abstract IActionManager<TAction> InitActionManager();

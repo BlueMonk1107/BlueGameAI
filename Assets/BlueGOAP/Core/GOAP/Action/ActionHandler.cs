@@ -11,27 +11,48 @@ namespace BlueGOAP
         /// </summary>
         public IAction<TAction> Action { get; private set; }
 
-        public TAction Label {
+        public TAction Label
+        {
             get { return Action.Label; }
         }
+
+        public bool IsComplete { get; private set; }
 
         protected IAgent<TAction, TGoal> _agent;
         private IAction<ActionEnum> action;
         protected System.Action _onFinishAction;
 
-        public ActionHandlerBase(IAgent<TAction, TGoal> agent,IAction<TAction> action)
+        public ActionHandlerBase(IAgent<TAction, TGoal> agent, IAction<TAction> action)
         {
             _agent = agent;
             Action = action;
+            IsComplete = false;
+        }
+
+        private void SetAgentData(IState state)
+        {
+            _agent.AgentState.SetData(state);
         }
 
         protected void SetAgentState<TKey>(TKey key,bool value)
         {
-            _agent.AgentState.SetState(key.ToString(), value);
+            _agent.AgentState.SetState(key.ToString(),value);
+        }
+
+        protected void OnComplete()
+        {
+            IsComplete = true;
+
+            if (_onFinishAction != null)
+                _onFinishAction();
+
+            SetAgentData(Action.Effects);
+            SetAgentData(Action.Preconditions.InversionValue());
         }
 
         public bool CanPerformAction()
         {
+            DebugMsg.Log("Action:"+ Action.Label);
             return Action.VerifyPreconditions();
         }
 
@@ -40,11 +61,20 @@ namespace BlueGOAP
             _onFinishAction = onFinishAction;
         }
 
-        public abstract void Enter();
+        public virtual void Enter()
+        {
+            IsComplete = false;
+        }
 
-        public abstract void Execute();
+        public virtual void Execute()
+        {
 
-        public abstract void Exit();
-        
+        }
+
+        public virtual void Exit()
+        {
+            
+        }
+
     }
 }

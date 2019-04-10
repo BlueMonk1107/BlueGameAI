@@ -13,7 +13,7 @@
         /// <summary>
         /// 动作执行的优先级 默认为0
         /// </summary>
-        int Precedence { get; }
+        int Priority { get; }
         /// <summary>
         /// 执行动作的先决条件
         /// </summary>

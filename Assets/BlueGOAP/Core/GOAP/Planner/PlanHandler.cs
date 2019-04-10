@@ -9,18 +9,32 @@ namespace BlueGOAP
         private Queue<IActionHandler<TAction>> _plan;
         private IActionManager<TAction> _actionManager;
         private Action _onComplete;
-
-        public bool InProgress { get; private set; }
+        private IActionHandler<TAction> _currentActionHandler;
 
         public bool IsComplete {
-            get { return _plan.Count == 0; }
+            get
+            {
+                if (_plan == null)
+                {
+                    return true;
+                }
+
+                if (_currentActionHandler == null)
+                {
+                    return _plan.Count == 0;
+                }
+                else
+                {
+                    return _currentActionHandler.IsComplete && _plan.Count == 0;
+                }
+            }
         }
 
         public void Init(IActionManager<TAction> actionManager, Queue<IActionHandler<TAction>> plan)
         {
+            _currentActionHandler = null;
             _actionManager = actionManager;
             _plan = plan;
-            InProgress = false;
         }
 
         public void AddCompleteCallBack(Action onComplete)
@@ -37,13 +51,14 @@ namespace BlueGOAP
         {
             if (IsComplete)
             {
-                InProgress = false;
                 _onComplete();
             }
             else
             {
-                InProgress = true;
-                _actionManager.ChangeCurrentAction(_plan.Dequeue().Label);
+                TAction label = _plan.Dequeue().Label;
+                _currentActionHandler = _actionManager.GetHandler(label);
+                DebugMsg.Log("----当前执行动作:"+ label);
+                _actionManager.ChangeCurrentAction(label);
             }
         }
     }

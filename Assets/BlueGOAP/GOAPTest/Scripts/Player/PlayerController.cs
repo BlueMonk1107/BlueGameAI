@@ -1,4 +1,4 @@
-
+﻿
 using UnityEngine;
 
 namespace BlueGOAPTest
@@ -16,7 +16,7 @@ namespace BlueGOAPTest
         {
             if (Input.GetKey(KeyCode.W))
             {
-                _controller.SimpleMove(Vector3.forward* _speed);
+                _controller.SimpleMove(Vector3.forward * _speed);
             }
             if (Input.GetKey(KeyCode.S))
             {

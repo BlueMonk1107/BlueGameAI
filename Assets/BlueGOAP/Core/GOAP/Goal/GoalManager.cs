@@ -1,17 +1,9 @@
 ﻿
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BlueGOAP
 {
-    //结果是大于0的，第一个数大
-    //就是数组是由大到小排列的
-    public class ComparerGoal<TGoal> : IComparer<IGoal<TGoal>>
-    {
-        public int Compare(IGoal<TGoal> x, IGoal<TGoal> y)
-        {
-            return x.CompareTo(y);
-        }
-    }
     public abstract class GoalManagerBase<TAction, TGoal> : IGoalManager<TGoal>
     {
         private Dictionary<TGoal, IGoal<TGoal>> _goalsDic;
@@ -39,14 +31,33 @@ namespace BlueGOAP
             if (goal != null)
             {
                 _goalsDic.Add(goalLabel, goal);
-                goal.AddGoalActivateListener((activeGoal) => _activeGoals.Add(activeGoal));
-                goal.AddGoalInactivateListener((activeGoal) => _activeGoals.Remove(activeGoal));
+                goal.AddGoalActivateListener((activeGoal) =>
+                {
+                    if (!_activeGoals.Contains(activeGoal))
+                    {
+                        _activeGoals.Add(activeGoal);
+                    }
+                });
+                goal.AddGoalInactivateListener((activeGoal) =>
+                {
+                    if (_activeGoals.Contains(activeGoal))
+                    {
+                        _activeGoals.Remove(activeGoal);
+                    }
+                });
             }
         }
 
         private void SortGoalList()
         {
-            _activeGoals.Sort(new ComparerGoal<TGoal>());
+            _activeGoals = _activeGoals.OrderByDescending(u => u.GetPriority()).ToList();
+
+            DebugMsg.Log("-----------active goal-----------");
+            foreach (IGoal<TGoal> goal in _activeGoals)
+            {
+                DebugMsg.Log(goal.Label+" 优先级："+ goal.GetPriority());
+            }
+            DebugMsg.Log("---------------------------------");
         }
 
         public void RemoveGoal(TGoal goalLabel)

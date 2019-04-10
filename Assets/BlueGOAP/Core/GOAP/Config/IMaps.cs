@@ -1,4 +1,4 @@
-
+ï»¿
 using System;
 using System.Collections.Generic;
 using BlueGOAPTest;
@@ -6,12 +6,14 @@ using BlueGOAPTest;
 namespace BlueGOAP
 {
     /// <summary>
-    /// ¶¯×÷µÈ¶ÔÏóµÄÓ³Éä¹ÜÀíÀà
+    /// åŠ¨ä½œç­‰å¯¹è±¡çš„æ˜ å°„ç®¡ç†ç±»
     /// </summary>
     public interface IMaps<TAction, TGoal>
     {
         IActionHandler<TAction> GetActionHandler(TAction actionLabel);
         IGoal<TGoal> GetGoal(TGoal goalLabel);
+        void SetGameData<Tkey>(Tkey key,object value);
+        object GetGameData<Tkey>(Tkey key);
     }
 
     public abstract class MapsBase<TAction, TGoal> : IMaps<TAction, TGoal>
@@ -19,24 +21,31 @@ namespace BlueGOAP
         private Dictionary<TAction, IActionHandler<TAction>> _actionHandlerDic;
         private Dictionary<TGoal, IGoal<TGoal>> _goalsDic;
         protected IAgent<ActionEnum, GoalEnum> _agent;
+        private Dictionary<string, object> _gameData; 
 
         public MapsBase(IAgent<ActionEnum, GoalEnum> agent)
         {
             _agent = agent;
             _actionHandlerDic = new Dictionary<TAction, IActionHandler<TAction>>();
             _goalsDic = new Dictionary<TGoal, IGoal<TGoal>>();
+            _gameData = new Dictionary<string, object>();
+            InitGameData();
             InitActinMaps();
             InitGoalMaps();
         }
 
         /// <summary>
-        /// ÔÚ´Ëº¯ÊıÄÚÊÖ¶¯ÌîĞ´¶ÔÓ¦µÄ¶¯×÷Êı¾İ
+        /// åœ¨æ­¤å‡½æ•°å†…æ‰‹åŠ¨å¡«å†™å¯¹åº”çš„åŠ¨ä½œæ•°æ®
         /// </summary>
         protected abstract void InitActinMaps();
         /// <summary>
-        /// ÔÚ´Ëº¯ÊıÄÚÊÖ¶¯ÌîĞ´¶ÔÓ¦µÄÄ¿±êÊı¾İ
+        /// åœ¨æ­¤å‡½æ•°å†…æ‰‹åŠ¨å¡«å†™å¯¹åº”çš„ç›®æ ‡æ•°æ®
         /// </summary>
         protected abstract void InitGoalMaps();
+        /// <summary>
+        /// åˆå§‹åŒ–æ¸¸æˆå†…æ•°æ®
+        /// </summary>
+        protected abstract void InitGameData();
 
         protected void AddAction(IActionHandler<TAction> handler)
         {
@@ -63,7 +72,7 @@ namespace BlueGOAP
         }
 
         /// <summary>
-        /// »ñÈ¡¶¯×÷Êı¾İ
+        /// è·å–åŠ¨ä½œæ•°æ®
         /// </summary>
         /// <param name="actionLabel"></param>
         /// <returns></returns>
@@ -76,7 +85,7 @@ namespace BlueGOAP
             return map;
         }
         /// <summary>
-        /// »ñÈ¡Ä¿±êÊı¾İ
+        /// è·å–ç›®æ ‡æ•°æ®
         /// </summary>
         /// <param name="goalLabel"></param>
         /// <returns></returns>
@@ -87,6 +96,24 @@ namespace BlueGOAP
             if (goal == null)
                 DebugMsg.LogError("goal:" + goalLabel + " not init");
             return goal;
+        }
+
+        public void SetGameData<Tkey>(Tkey key, object value)
+        {
+            _gameData[key.ToString()] = value;
+        }
+
+        public object GetGameData<Tkey>(Tkey key)
+        {
+            if (_gameData.ContainsKey(key.ToString()))
+            {
+                return _gameData[key.ToString()];
+            }
+            else
+            {
+                DebugMsg.LogError("can not find key name is "+ key);
+                return null;
+            }
         }
     }
 }

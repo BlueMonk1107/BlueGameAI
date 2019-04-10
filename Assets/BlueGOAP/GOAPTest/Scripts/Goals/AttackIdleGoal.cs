@@ -3,20 +3,20 @@ using BlueGOAP;
 
 namespace BlueGOAPTest
 {
-    public class AlertGoal : GoalBase<ActionEnum, GoalEnum>
+    public class AttackIdleGoal : GoalBase<ActionEnum, GoalEnum>
     {
-        public override GoalEnum Label
+        public AttackIdleGoal(IAgent<ActionEnum, GoalEnum> agent) : base(agent)
         {
-            get { return GoalEnum.ALERT; }
         }
 
-        public AlertGoal(IAgent<ActionEnum, GoalEnum> agent) : base(agent)
+        public override GoalEnum Label
         {
+            get { return GoalEnum.ATTACK_IDLE; }
         }
 
         public override float GetPriority()
         {
-            return 1;
+            return 2;
         }
 
         public override IState GetEffects()
@@ -33,8 +33,7 @@ namespace BlueGOAPTest
 
         protected override bool ActiveCondition()
         {
-            return GetAgentStateValue(KeyNameEnum.FIND_ENEMY) == true
-                && GetAgentStateValue(KeyNameEnum.MOVE) == false;
+            return GetAgentStateValue(KeyNameEnum.ATTACK_IDLE) == true;
         }
     }
 }

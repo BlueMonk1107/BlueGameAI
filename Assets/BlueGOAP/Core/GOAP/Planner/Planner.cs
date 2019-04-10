@@ -1,19 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BlueGOAP
 {
-    /// <summary>
-    /// 优先级比较器
-    /// </summary>
-    /// <typeparam name="TAction"></typeparam>
-    class PrecedenceComparer<TAction> : IComparer<IActionHandler<TAction>>
-    {
-        public int Compare(IActionHandler<TAction> x, IActionHandler<TAction> y)
-        {
-            return x.Action.Precedence - y.Action.Precedence;
-        }
-    }
     public class Planner<TAction, TGoal> : IPlanner<TAction, TGoal>
     {
         private IAgent<TAction, TGoal> _agent;
@@ -41,16 +31,28 @@ namespace BlueGOAP
                 return _plan;
 
             TreeNode<TAction> currentNode = Plan(goal);
+
+            if (currentNode == null)
+            {
+                _plan.Enqueue(_agent.ActionManager.GetHandler(_agent.ActionManager.GetDefaultActionLabel()));
+                DebugMsg.LogError("当前节点为空，设置当前动作为默认动作");
+                return _plan;
+            }
+
             while (currentNode.ID != TreeNode<TAction>.DEFAULT_ID)
             {
                 _plan.Enqueue(currentNode.ActionHandler);
                 currentNode = currentNode.ParentNode;
             }
 
+            DebugMsg.Log("---------------最终生成计划------------");
             foreach (IActionHandler<TAction> handler in _plan)
             {
                 DebugMsg.Log("计划项："+handler.Label);
             }
+            DebugMsg.Log("---------------当前代理状态------------");
+            DebugMsg.Log(_agent.AgentState.ToString());
+            DebugMsg.Log("---------------------------");
             DebugMsg.Log("计划结束");
             return _plan;
         }
@@ -66,13 +68,17 @@ namespace BlueGOAP
             TreeNode<TAction> currentNode = cheapestNode;
             while (!IsEnd(currentNode))
             {
-                DebugMsg.Log("current ID:"+currentNode.ID.ToString());
                 currentNode = cheapestNode;
                 cheapestNode = null;
                 //获取所有的子行为
                 List<IActionHandler<TAction>> handlers = GetSubHandlers(currentNode);
                 TreeNode<TAction> subNode = null;
-                DebugMsg.Log("handlers count:" + handlers.Count);
+
+                foreach (IActionHandler<TAction> handler in handlers)
+                {
+                    DebugMsg.Log("计划子行为:" + handler.Label);
+                }
+
                 for (int i = 0; i < handlers.Count; i++)
                 {
                     subNode = _tree.CreateNode(handlers[i]);
@@ -104,7 +110,7 @@ namespace BlueGOAP
             }
             else
             {
-                if (nodeA.ActionHandler.Action.Precedence > nodeB.ActionHandler.Action.Precedence)
+                if (nodeA.ActionHandler.Action.Priority > nodeB.ActionHandler.Action.Priority)
                 {
                     return nodeA;
                 }
@@ -122,7 +128,7 @@ namespace BlueGOAP
 
             if (GetStateDifferecnceNum(currentNode) == 0)
                 return true;
-            DebugMsg.Log("different:"+ GetStateDifferecnceNum(currentNode));
+
             return false;
         }
 
@@ -179,7 +185,7 @@ namespace BlueGOAP
                     foreach (IActionHandler<TAction> handler in map[key])
                     {
                         //筛选能够执行的动作
-                        if (handler.CanPerformAction())
+                        if (!handlers.Contains(handler) && handler.CanPerformAction())
                         {
                             handlers.Add(handler);
                         }
@@ -187,7 +193,7 @@ namespace BlueGOAP
                 }
             }
             //进行优先级排序
-            handlers.Sort(new PrecedenceComparer<TAction>());
+            handlers = handlers.OrderByDescending(u => u.Action.Priority).ToList();
             return handlers;
         }
 

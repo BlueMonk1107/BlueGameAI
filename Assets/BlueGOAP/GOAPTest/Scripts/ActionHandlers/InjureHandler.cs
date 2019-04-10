@@ -20,6 +20,7 @@ namespace BlueGOAPTest
 
         public override void Exit()
         {
+            base.Exit();
         }
     }
 }

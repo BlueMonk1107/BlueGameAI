@@ -11,17 +11,9 @@ namespace BlueGOAPTest
 
         public override void Enter()
         {
+            base.Enter();
             DebugMsg.Log("进入攻击状态");
-        }
-
-        public override void Execute()
-        {
-            
-        }
-
-        public override void Exit()
-        {
-            
+            OnComplete();
         }
     }
 }

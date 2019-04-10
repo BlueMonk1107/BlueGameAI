@@ -1,47 +1,52 @@
-
+ï»¿
 using System;
 using System.Collections.Generic;
 
 namespace BlueGOAP
 {
     /// <summary>
-    /// ÊÂ¼ş¹ÜÀí
+    /// äº‹ä»¶ç®¡ç†
     /// </summary>
     public interface IActionManager<TAction>
     {
         /// <summary>
-        /// ÊÇ·ñÖ´ĞĞ¶¯×÷
+        /// æ˜¯å¦æ‰§è¡ŒåŠ¨ä½œ
         /// </summary>
         bool IsPerformAction { get; set; }
         /// <summary>
-        /// Ğ§¹ûºÍ¶¯×÷µÄÓ³Éä¹ØÏµ
+        /// æ•ˆæœå’ŒåŠ¨ä½œçš„æ˜ å°„å…³ç³»
         /// </summary>
         Dictionary<string, HashSet<IActionHandler<TAction>>> EffectsAndActionMap { get; }
         /// <summary>
-        /// Ìí¼Ó´¦ÀíÀà¶ÔÏó
+        /// è·å–é»˜è®¤åŠ¨ä½œçš„æ ‡ç­¾
+        /// </summary>
+        /// <returns></returns>
+        TAction GetDefaultActionLabel();
+        /// <summary>
+        /// æ·»åŠ å¤„ç†ç±»å¯¹è±¡
         /// </summary>
         void AddHandler(TAction actionLabel);
         /// <summary>
-        /// ÒÆ³ı´¦ÀíÀà¶ÔÏó
+        /// ç§»é™¤å¤„ç†ç±»å¯¹è±¡
         /// </summary>
         /// <param name="handler"></param>
         void RemoveHandler(TAction actionLabel);
         /// <summary>
-        /// »ñÈ¡´¦ÀíÀà¶ÔÏó
+        /// è·å–å¤„ç†ç±»å¯¹è±¡
         /// </summary>
         /// <param name="handler"></param>
         IActionHandler<TAction> GetHandler(TAction actionLabel);
         /// <summary>
-        /// Ö¡º¯Êı
+        /// å¸§å‡½æ•°
         /// </summary>
         void FrameFun();
         /// <summary>
-        /// ¸Ä±äµ±Ç°Ö´ĞĞµÄ¶¯×÷
+        /// æ”¹å˜å½“å‰æ‰§è¡Œçš„åŠ¨ä½œ
         /// </summary>
         /// <param name="actionLabel"></param>
         void ChangeCurrentAction(TAction actionLabel);
         /// <summary>
-        /// Ìí¼Ó¶¯×÷Íê³ÉµÄ¼àÌı
+        /// æ·»åŠ åŠ¨ä½œå®Œæˆçš„ç›‘å¬
         /// </summary>
         /// <param name="actionComplete"></param>
         void AddActionCompleteListener(Action actionComplete);

@@ -16,14 +16,13 @@ namespace BlueGOAPTest
 
         public override float GetPriority()
         {
-            return 2;
+            return 3;
         }
 
         public override IState GetEffects()
         {
             State<KeyNameEnum> effects = new State<KeyNameEnum>();
-            effects.SetState(KeyNameEnum.NEAR_ENEMY, true);
-            effects.SetState(KeyNameEnum.ATTACK, true);
+            effects.SetState(KeyNameEnum.NEAR_ENEMY, true);;
             return effects;
         }
 
@@ -34,7 +33,7 @@ namespace BlueGOAPTest
 
         protected override bool ActiveCondition()
         {
-            return GetAgentStateValue(KeyNameEnum.FIND_ENEMY) == true;
+            return  GetAgentStateValue(KeyNameEnum.MOVE) == true;
         }
     }
 }

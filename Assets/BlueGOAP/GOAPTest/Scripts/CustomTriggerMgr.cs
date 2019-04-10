@@ -1,4 +1,4 @@
-
+﻿
 using BlueGOAP;
 
 namespace BlueGOAPTest
@@ -11,7 +11,7 @@ namespace BlueGOAPTest
 
         protected override void InitTriggers()
         {
-            AddTrigger(new TriggerEyes(_agent,ObjectsInScene.Instance.Enemy, ObjectsInScene.Instance.Player));
+            AddTrigger(new TriggerEyes(_agent));
         }
     }
 }

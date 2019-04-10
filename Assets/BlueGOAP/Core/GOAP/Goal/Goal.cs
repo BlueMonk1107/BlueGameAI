@@ -8,14 +8,12 @@ namespace BlueGOAP
         private IAgent<TAction, TGoal> _agent;
         private Action<IGoal<TGoal>> _onActivate;
         private Action<IGoal<TGoal>> _onInactivate;
-        private bool _lastActiveState;
 
         public abstract TGoal Label { get;}
 
         public GoalBase(IAgent<TAction, TGoal> agent)
         {
             _agent = agent;
-            _lastActiveState = false;
         }
 
         public abstract float GetPriority();
@@ -53,17 +51,15 @@ namespace BlueGOAP
 
         public void Update()
         {
-            if (ActiveCondition() != _lastActiveState)
+            DebugMsg.Log("----"+Label+"激活条件：" + ActiveCondition());
+
+            if (ActiveCondition())
             {
-                _lastActiveState = ActiveCondition();
-                if (_lastActiveState)
-                {
-                    _onActivate(this);
-                }
-                else
-                {
-                    _onInactivate(this);
-                }
+                _onActivate(this);
+            }
+            else
+            {
+                _onInactivate(this);
             }
         }
         /// <summary>
@@ -71,10 +67,5 @@ namespace BlueGOAP
         /// </summary>
         /// <returns></returns>
         protected abstract bool ActiveCondition();
-
-        public int CompareTo(IGoal<TGoal> otherGoal)
-        {
-            return GetPriority() - otherGoal.GetPriority() > 0 ? 1 : -1;
-        }
     }
 }

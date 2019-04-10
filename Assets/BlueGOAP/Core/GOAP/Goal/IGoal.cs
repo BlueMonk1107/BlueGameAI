@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 
 namespace BlueGOAP
@@ -6,37 +6,31 @@ namespace BlueGOAP
     public interface IGoal<TGoal>
     {
         /// <summary>
-        /// Ä¿±êµÄ±êÇ©
+        /// ç›®æ ‡çš„æ ‡ç­¾
         /// </summary>
         TGoal Label { get; }
         /// <summary>
-        /// ±È½ÏGoalµÄÓÅÏÈ¼¶
-        /// </summary>
-        /// <param name="otherGoal"></param>
-        /// <returns></returns>
-        int CompareTo(IGoal<TGoal> otherGoal);
-        /// <summary>
-        /// »ñÈ¡ÓÅÏÈ¼¶
+        /// è·å–ä¼˜å…ˆçº§
         /// </summary>
         /// <returns></returns>
         float GetPriority();
         /// <summary>
-        /// »ñÈ¡Ä¿±ê¶Ô×´Ì¬µÄÓ°Ïì
+        /// è·å–ç›®æ ‡å¯¹çŠ¶æ€çš„å½±å“
         /// </summary>
         /// <returns></returns>
         IState GetEffects();
         /// <summary>
-        /// ÊÇ·ñÒÑ¾­ÊµÏÖÄ¿±ê
+        /// æ˜¯å¦å·²ç»å®ç°ç›®æ ‡
         /// </summary>
         /// <returns></returns>
         bool IsGoalComplete();
         /// <summary>
-        /// Ìí¼ÓÄ¿±ê¼¤»îµÄ¼àÌı
+        /// æ·»åŠ ç›®æ ‡æ¿€æ´»çš„ç›‘å¬
         /// </summary>
         /// <param name="onActivate"></param>
         void AddGoalActivateListener(Action<IGoal<TGoal>> onActivate);
         /// <summary>
-        /// Ìí¼ÓÄ¿±êÎ´¼¤»îµÄ¼àÌı
+        /// æ·»åŠ ç›®æ ‡æœªæ¿€æ´»çš„ç›‘å¬
         /// </summary>
         /// <param name="onInactivate"></param>
         void AddGoalInactivateListener(Action<IGoal<TGoal>> onInactivate);

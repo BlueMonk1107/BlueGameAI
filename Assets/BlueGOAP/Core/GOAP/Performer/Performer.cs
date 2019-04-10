@@ -22,7 +22,7 @@ namespace BlueGOAP
         {
             if (WhetherToReplan())
             {
-                DebugMsg.Log("开始制定计划并开始计划的流程");
+                DebugMsg.Log("制定新计划");
                 BuildPlanAndStart();
             }
         }
@@ -30,6 +30,8 @@ namespace BlueGOAP
         //制定计划并开始计划
         private void BuildPlanAndStart()
         {
+            if(_goalManager.CurrentGoal != null)
+                DebugMsg.Log("----------------新的目标：" + _goalManager.CurrentGoal.Label.ToString());
             //若目标完成则重新寻找目标
             var plan = _planner.BuildPlan(_goalManager.CurrentGoal);
             if (plan != null && plan.Count > 0)
@@ -43,9 +45,8 @@ namespace BlueGOAP
         //计划完成
         private void PlanComplete()
         {
+            DebugMsg.Log("计划完成");
             _actionManager.IsPerformAction = false;
-            DebugMsg.Log(_goalManager.CurrentGoal.Label.ToString());
-            //BuildPlanAndStart();
         }
 
         //计划完成了当前动作
@@ -58,15 +59,8 @@ namespace BlueGOAP
         //检测是否需要重新制定计划
         private bool WhetherToReplan()
         {
-            //当前计划是否正在执行
-            if (_planHandler.InProgress)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            //当前计划是否完成
+            return _planHandler.IsComplete;
         }
     }
 }

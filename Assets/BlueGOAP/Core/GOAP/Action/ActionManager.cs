@@ -54,6 +54,8 @@ namespace BlueGOAP
             }
         }
 
+        public abstract TAction GetDefaultActionLabel();
+
         public void AddHandler(TAction actionLabel)
         {
             var handler = _agent.Maps.GetActionHandler(actionLabel);

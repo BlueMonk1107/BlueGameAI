@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -7,59 +7,63 @@ namespace BlueGOAP
     public interface IState
     {
         /// <summary>
-        /// ±£´æÊı¾İ
+        /// ä¿å­˜æ•°æ®
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
         void SetState(string key, bool value);
         /// <summary>
-        /// Ìí¼ÓÊı¾İĞŞ¸Ä¼àÌı
+        /// æ·»åŠ æ•°æ®ä¿®æ”¹ç›‘å¬
         /// </summary>
         /// <param name="onChange"></param>
         void AddStateChangeListener(Action onChange);
         /// <summary>
-        /// »ñÈ¡Á½¸öStateÍ¬Ê±°üº¬µÄ¼üÖµ¼°µ±Ç°×´Ì¬¼üÖµ¶ÔÓ¦µÄÊı¾İ
+        /// è·å–ä¸¤ä¸ªStateåŒæ—¶åŒ…å«çš„é”®å€¼åŠå½“å‰çŠ¶æ€é”®å€¼å¯¹åº”çš„æ•°æ®
         /// </summary>
         IState GetSameData(IState otherState);
         /// <summary>
-        /// ¶ÁÈ¡Êı¾İ
+        /// åè½¬å½“å‰stateæ‰€æœ‰çš„valueå€¼
+        /// </summary>
+        IState InversionValue();
+        /// <summary>
+        /// è¯»å–æ•°æ®
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
         bool GetValue(string key);
         /// <summary>
-        /// Èôµ±Ç°State°üº¬otherStateËùÓĞµÄ¼üÖµ¶Ô£¬ÇÒ¶ÔÓ¦Öµ¶¼ÏàµÈ£¬·µ»Øtrue£¬·´Ö®·µ»Øfalse
+        /// è‹¥å½“å‰StateåŒ…å«otherStateæ‰€æœ‰çš„é”®å€¼å¯¹ï¼Œä¸”å¯¹åº”å€¼éƒ½ç›¸ç­‰ï¼Œè¿”å›trueï¼Œåä¹‹è¿”å›false
         /// </summary>
         /// <returns></returns>
         bool ContainState(IState otherState);
         /// <summary>
-        /// »ñÈ¡¸úÁíÍâÒ»¸ö×´Ì¬µÄ²îÒì¼üÖµ¼¯ºÏ
+        /// è·å–è·Ÿå¦å¤–ä¸€ä¸ªçŠ¶æ€çš„å·®å¼‚é”®å€¼é›†åˆ
         /// </summary>
         /// <param name="otherState"></param>
         /// <returns></returns>
         ICollection<string> GetValueDifferences(IState otherState);
         /// <summary>
-        /// °ÑËùÌá¹©×´Ì¬µÄËùÓĞ¼üÖµ½øĞĞÉ¸Ñ¡
-        /// µ±Ç°×´Ì¬²»´æÔÚµÄ¾ÍÌí¼Ó½øÀ´£¬´æÔÚÔòºöÂÔ
+        /// æŠŠæ‰€æä¾›çŠ¶æ€çš„æ‰€æœ‰é”®å€¼è¿›è¡Œç­›é€‰
+        /// å½“å‰çŠ¶æ€ä¸å­˜åœ¨çš„å°±æ·»åŠ è¿›æ¥ï¼Œå­˜åœ¨åˆ™å¿½ç•¥
         /// </summary>
         void SetKeys(IState agentState,IState otherState);
         /// <summary>
-        /// °ÑËùÌá¹©×´Ì¬µÄËùÓĞÊı¾İ¸²¸Çµ½µ±Ç°×´Ì¬
+        /// æŠŠæ‰€æä¾›çŠ¶æ€çš„æ‰€æœ‰æ•°æ®è¦†ç›–åˆ°å½“å‰çŠ¶æ€
         /// </summary>
         void SetData(IState otherState);
         /// <summary>
-        /// ÄÚ²¿Êı¾İÊÇ·ñ°üº¬ËùÌá¹©key
+        /// å†…éƒ¨æ•°æ®æ˜¯å¦åŒ…å«æ‰€æä¾›key
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
         bool ContainKey(string key);
         /// <summary>
-        /// »ñÈ¡µ±Ç°ËùÓĞ¼üÖµ
+        /// è·å–å½“å‰æ‰€æœ‰é”®å€¼
         /// </summary>
         /// <returns></returns>
         ICollection<string> GetKeys();
         /// <summary>
-        /// Çå¿ÕÊı¾İ
+        /// æ¸…ç©ºæ•°æ®
         /// </summary>
         void Clear();
     }

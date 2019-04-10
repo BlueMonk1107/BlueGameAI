@@ -1,8 +1,10 @@
-
+ï»¿
 namespace BlueGOAPTest
 {
     public enum ActionEnum
     {
+        IDLE,
+        ATTACK_IDLE,
         Alert,
         MOVE,
         ATTACK,
@@ -12,56 +14,76 @@ namespace BlueGOAPTest
     public enum GoalEnum
     {
         /// <summary>
-        /// ¹¥»÷
+        /// æ”»å‡»
         /// </summary>
         ATTACK,
         /// <summary>
-        /// ¾¯½ä
+        /// è­¦æˆ’
         /// </summary>
         ALERT,
         /// <summary>
-        /// ÒÆ¶¯
+        /// ç§»åŠ¨
         /// </summary>
-        MOVE
+        MOVE,
+        /// <summary>
+        /// æˆ˜æ–—å¾…æœº
+        /// </summary>
+        ATTACK_IDLE,
     }
     
     public enum KeyNameEnum
     {
         /// <summary>
-        /// ·¢ÏÖµĞÈË
+        /// å‘ç°æ•Œäºº
         /// </summary>
         FIND_ENEMY,
         /// <summary>
-        /// Ñ²Âß
+        /// å·¡é€»
         /// </summary>
         GO_ON_PATROL,
         /// <summary>
-        /// ¿´ÏòµĞÈË
+        /// çœ‹å‘æ•Œäºº
         /// </summary>
         LOOK_AT_ENEMY,
         /// <summary>
-        /// ´ı»ú
+        /// å¾…æœº
         /// </summary>
         IDLE,
         /// <summary>
-        /// ÒÆ¶¯
+        /// æˆ˜æ–—å¾…æœº
+        /// </summary>
+        ATTACK_IDLE,
+        /// <summary>
+        /// ç§»åŠ¨
         /// </summary>
         MOVE,
         /// <summary>
-        /// ÁÙ½üµĞÈË
+        /// ä¸´è¿‘æ•Œäºº
         /// </summary>
         NEAR_ENEMY,
         /// <summary>
-        /// ¹¥»÷
+        /// æ”»å‡»
         /// </summary>
         ATTACK,
         /// <summary>
-        /// ÊÜÉË
+        /// å—ä¼¤
         /// </summary>
         INJURE,
         /// <summary>
-        /// ÏûÃğµĞÈË
+        /// æ¶ˆç­æ•Œäºº
         /// </summary>
         KILLED_ENEMY
+    }
+
+    public enum DataName
+    {
+        /// <summary>
+        /// è‡ªèº«çš„Transformå¯¹è±¡
+        /// </summary>
+        SELF_TRANS,
+        /// <summary>
+        /// æ•Œäººçš„Transformå¯¹è±¡
+        /// </summary>
+        ENEMY_TRANS
     }
 }

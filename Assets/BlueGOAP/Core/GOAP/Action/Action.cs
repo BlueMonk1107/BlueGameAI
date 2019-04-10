@@ -5,7 +5,7 @@ namespace BlueGOAP
     {
         public abstract TAction Label { get; }
         public abstract int Cost { get; }
-        public abstract int Precedence { get; }
+        public abstract int Priority { get; }
 
         /// <summary>
         /// 执行动作的先决条件

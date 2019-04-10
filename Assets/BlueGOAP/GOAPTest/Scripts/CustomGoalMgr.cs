@@ -1,4 +1,4 @@
-
+﻿
 using BlueGOAP;
 
 namespace BlueGOAPTest
@@ -14,6 +14,7 @@ namespace BlueGOAPTest
             AddGoal(GoalEnum.ATTACK);
             AddGoal(GoalEnum.ALERT);
             AddGoal(GoalEnum.MOVE);
+            AddGoal(GoalEnum.ATTACK_IDLE);
         }
     }
 }

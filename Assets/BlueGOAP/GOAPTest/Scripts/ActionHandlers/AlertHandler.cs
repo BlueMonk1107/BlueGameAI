@@ -3,7 +3,7 @@ using BlueGOAP;
 
 namespace BlueGOAPTest
 {
-    public class AlertHandler : ActionHandlerBase<ActionEnum,GoalEnum>
+    public class AlertHandler : ActionHandlerBase<ActionEnum, GoalEnum>
     {
         public AlertHandler(IAgent<ActionEnum, GoalEnum> agent, IAction<ActionEnum> action) : base(agent, action)
         {
@@ -11,23 +11,15 @@ namespace BlueGOAPTest
 
         public override void Enter()
         {
+            base.Enter();
             DebugMsg.Log("进入警戒状态");
-           
-            if(_onFinishAction != null)
-                _onFinishAction();
-            
-            SetAgentState(KeyNameEnum.LOOK_AT_ENEMY, true);
-        }
 
-        public override void Execute()
-        {
+            OnComplete();
         }
 
         public override void Exit()
         {
-            
+            DebugMsg.Log("退出警戒状态");
         }
-
-       
     }
 }

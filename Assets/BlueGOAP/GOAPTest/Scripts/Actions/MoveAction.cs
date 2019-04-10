@@ -7,7 +7,7 @@ namespace BlueGOAPTest
     {
         public override ActionEnum Label { get { return ActionEnum.MOVE; } }
         public override int Cost { get { return 5; } }
-        public override int Precedence { get { return 70; } }
+        public override int Priority { get { return 70; } }
 
         public MoveAction(IAgent<ActionEnum, GoalEnum> agent) : base(agent)
         {
@@ -16,8 +16,7 @@ namespace BlueGOAPTest
         protected override IState InitPreconditions()
         {
             State<KeyNameEnum> effects = new State<KeyNameEnum>();
-            effects.SetState(KeyNameEnum.FIND_ENEMY, true);
-            effects.SetState(KeyNameEnum.NEAR_ENEMY, false);
+            effects.SetState(KeyNameEnum.MOVE, true);
             return effects;
         }
 

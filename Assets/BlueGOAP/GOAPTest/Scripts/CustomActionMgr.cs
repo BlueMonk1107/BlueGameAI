@@ -1,4 +1,4 @@
-
+﻿
 using BlueGOAP;
 
 namespace BlueGOAPTest
@@ -15,6 +15,12 @@ namespace BlueGOAPTest
             AddHandler(ActionEnum.Alert);
             AddHandler(ActionEnum.INJURE);
             AddHandler(ActionEnum.MOVE);
+            AddHandler(ActionEnum.ATTACK_IDLE);
+        }
+
+        public override ActionEnum GetDefaultActionLabel()
+        {
+            return ActionEnum.Alert;
         }
     }
 }

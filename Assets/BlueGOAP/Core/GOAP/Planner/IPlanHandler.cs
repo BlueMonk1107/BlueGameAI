@@ -1,4 +1,4 @@
-
+ï»¿
 using System;
 using System.Collections.Generic;
 
@@ -7,26 +7,22 @@ namespace BlueGOAP
     public interface IPlanHandler<TAction>
     {
         /// <summary>
-        /// ¼Æ»®ÊÇ·ñÕıÔÚ½øĞĞÖĞ
-        /// </summary>
-        bool InProgress { get; }
-        /// <summary>
-        /// µ±Ç°¼Æ»®ÊÇ·ñÍê³É
+        /// å½“å‰è®¡åˆ’æ˜¯å¦å®Œæˆ
         /// </summary>
         bool IsComplete { get; }
         /// <summary>
-        /// ³õÊ¼»¯
+        /// åˆå§‹åŒ–
         /// </summary>
         /// <param name="plan"></param>
         void Init(IActionManager<TAction> actionManager,Queue<IActionHandler<TAction>> plan);
 
         void AddCompleteCallBack(Action onComplete);
         /// <summary>
-        /// ¿ªÊ¼Ö´ĞĞ¼Æ»®
+        /// å¼€å§‹æ‰§è¡Œè®¡åˆ’
         /// </summary>
         void StartPlan();
         /// <summary>
-        /// Ö´ĞĞÏÂÒ»¸ö¶¯×÷
+        /// æ‰§è¡Œä¸‹ä¸€ä¸ªåŠ¨ä½œ
         /// </summary>
         void NextAction();
     }

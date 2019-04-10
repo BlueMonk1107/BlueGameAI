@@ -9,10 +9,10 @@ namespace BlueGOAPTest
     {
         private Transform _self, _enemy;
 
-        public TriggerEyes(IAgent<ActionEnum, GoalEnum> agent, Transform self,Transform enemy) : base(agent)
+        public TriggerEyes(IAgent<ActionEnum, GoalEnum> agent) : base(agent)
         {
-            _self = self;
-            _enemy = enemy;
+            _self = (Transform)agent.Maps.GetGameData(DataName.SELF_TRANS);
+            _enemy = (Transform)agent.Maps.GetGameData(DataName.ENEMY_TRANS);
         }
 
         public override bool IsTrigger

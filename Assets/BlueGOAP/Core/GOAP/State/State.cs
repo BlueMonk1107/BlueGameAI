@@ -2,6 +2,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
 
 namespace BlueGOAP
 {
@@ -53,6 +56,17 @@ namespace BlueGOAP
             return data;
         }
 
+        public IState InversionValue()
+        {
+            IState state = new State();
+            foreach (string key in GetKeys())
+            {
+                state.SetState(key, !_dataTable[key]);
+            }
+
+            return state;
+        }
+
         public bool GetValue(string key)
         {
             if (key == null)
@@ -64,6 +78,18 @@ namespace BlueGOAP
 
         public bool ContainState(IState otherState)
         {
+            foreach (string key in otherState.GetKeys())
+            {
+                DebugMsg.Log("otherState key:"+ key+"   "+ otherState.GetValue(key));
+            }
+            foreach (var key in otherState.GetKeys())
+            {
+                if (ContainKey(key))
+                {
+                    DebugMsg.Log("key  " + key + "   当前状态的值  " + _dataTable[key] + "  另一状态的值 " + otherState.GetValue(key));
+                }
+            }
+
             foreach (var key in otherState.GetKeys())
             {
                 if (!ContainKey(key) || _dataTable[key] != otherState.GetValue(key))
@@ -118,6 +144,21 @@ namespace BlueGOAP
         public void Clear()
         {
             _dataTable.Clear();
+        }
+
+        public override string ToString()
+        {
+            StringBuilder temp = new StringBuilder();
+            foreach (KeyValuePair<string, bool> pair in _dataTable)
+            {
+                temp.Append("key:");
+                temp.Append(pair.Key);
+                temp.Append("        value:");
+                temp.Append(pair.Value);
+                temp.Append("\r\n");
+            }
+
+            return temp.ToString();
         }
     }
 

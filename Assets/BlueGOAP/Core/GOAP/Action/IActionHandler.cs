@@ -1,28 +1,33 @@
-using System;
+ï»¿using System;
 using UnityEngine;
 
 namespace BlueGOAP
 {
     /// <summary>
-    /// ÊÂ¼ş´¦Àí½Ó¿Ú
+    /// äº‹ä»¶å¤„ç†æ¥å£
     /// </summary>
     public interface IActionHandler<TAction> : IFsmState<TAction>
     {
         /// <summary>
-        /// ¶¯×÷
+        /// åŠ¨ä½œ
         /// </summary>
         IAction<TAction> Action { get; }
         /// <summary>
-        /// µ±Ç°´¦ÀíÆ÷´¦ÀíµÄ¶¯×÷µÄ±êÇ©
+        /// å½“å‰å¤„ç†å™¨å¤„ç†çš„åŠ¨ä½œçš„æ ‡ç­¾
         /// </summary>
         TAction Label { get; }
         /// <summary>
-        /// ÅĞ¶Ïµ±Ç°×´Ì¬ÊÇ·ñÄÜ¹»Ö´ĞĞ¶¯×÷
+        /// åŠ¨ä½œæ‰§è¡Œå®Œæˆ
+        /// </summary>
+        bool IsComplete { get; }
+
+        /// <summary>
+        /// åˆ¤æ–­å½“å‰çŠ¶æ€æ˜¯å¦èƒ½å¤Ÿæ‰§è¡ŒåŠ¨ä½œ
         /// </summary>
         /// <returns></returns>
         bool CanPerformAction();
         /// <summary>
-        /// Ìí¼Ó¶¯×÷Íê³É»Øµ÷
+        /// æ·»åŠ åŠ¨ä½œå®Œæˆå›è°ƒ
         /// </summary>
         /// <param name="onFinishAction"></param>
         void AddFinishAction(System.Action onFinishAction);
