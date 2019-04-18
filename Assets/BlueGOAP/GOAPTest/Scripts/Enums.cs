@@ -8,7 +8,8 @@ namespace BlueGOAPTest
         ALERT,
         MOVE,
         ATTACK,
-        INJURE
+        INJURE,
+        LOOK_AT
     }
 
     public enum GoalEnum
@@ -21,10 +22,6 @@ namespace BlueGOAPTest
         /// 警戒
         /// </summary>
         ALERT,
-        /// <summary>
-        /// 移动
-        /// </summary>
-        MOVE,
         /// <summary>
         /// 战斗待机
         /// </summary>

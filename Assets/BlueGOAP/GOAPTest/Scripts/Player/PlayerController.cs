@@ -8,7 +8,7 @@ namespace BlueGOAPTest
     {
         private CharacterController _controller;
         private float _speed = 5;
-        private Agent<ActionEnum, GoalEnum> _enemyAgent;
+        private IAgent<ActionEnum, GoalEnum> _enemyAgent;
         public void Start()
         {
             _controller = GetComponent<CharacterController>();
@@ -35,7 +35,7 @@ namespace BlueGOAPTest
             }
             if (Input.GetKey(KeyCode.K))
             {
-                _enemyAgent.AgentState.SetState(KeyNameEnum.INJURE.ToString(), true);
+                _enemyAgent.AgentState.Set(KeyNameEnum.INJURE.ToString(), true);
             }
         }
     }

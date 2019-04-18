@@ -17,14 +17,14 @@ namespace BlueGOAPTest
         protected override IState InitPreconditions()
         {
             State<KeyNameEnum> effects = new State<KeyNameEnum>();
-            effects.SetState(KeyNameEnum.MOVE, true);
+            effects.Set(KeyNameEnum.MOVE, true);
             return effects;
         }
 
         protected override IState InitEffects()
         {
             State<KeyNameEnum> effects = new State<KeyNameEnum>();
-            effects.SetState(KeyNameEnum.NEAR_ENEMY, true);
+            effects.Set(KeyNameEnum.NEAR_ENEMY, true);
             return effects;
         }
     }

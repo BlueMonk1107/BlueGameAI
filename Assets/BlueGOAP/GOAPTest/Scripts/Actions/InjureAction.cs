@@ -17,14 +17,14 @@ namespace BlueGOAPTest
         protected override IState InitPreconditions()
         {
             State<KeyNameEnum> effects = new State<KeyNameEnum>();
-            effects.SetState(KeyNameEnum.INJURE, true);
+            effects.Set(KeyNameEnum.INJURE, true);
             return effects;
         }
 
         protected override IState InitEffects()
         {
             State<KeyNameEnum> effects = new State<KeyNameEnum>();
-            effects.SetState(KeyNameEnum.INJURE, false);
+            effects.Set(KeyNameEnum.INJURE, false);
             return effects;
         }
 

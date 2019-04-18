@@ -19,22 +19,17 @@ namespace BlueGOAPTest
             return 1;
         }
 
-        public override IState GetEffects()
+        protected override IState InitEffects()
         {
             State<KeyNameEnum> effects = new State<KeyNameEnum>();
-            effects.SetState(KeyNameEnum.MOVE, true);
+            effects.Set(KeyNameEnum.MOVE, true);
             return effects;
-        }
-
-        public override bool IsGoalComplete()
-        {
-            return GetAgentStateValue(KeyNameEnum.MOVE) == true;
         }
 
         protected override bool ActiveCondition()
         {
-            return GetAgentStateValue(KeyNameEnum.FIND_ENEMY) == true
-                && GetAgentStateValue(KeyNameEnum.MOVE) == false;
+            return GetAgentState(KeyNameEnum.FIND_ENEMY) == true
+                && GetAgentState(KeyNameEnum.MOVE) == false;
         }
     }
 }

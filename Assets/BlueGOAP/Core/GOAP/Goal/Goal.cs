@@ -5,6 +5,7 @@ namespace BlueGOAP
 {
     public abstract class GoalBase<TAction, TGoal> : IGoal<TGoal>
     {
+        private IState _effects;
         private IAgent<TAction, TGoal> _agent;
         private Action<IGoal<TGoal>> _onActivate;
         private Action<IGoal<TGoal>> _onInactivate;
@@ -14,6 +15,7 @@ namespace BlueGOAP
         public GoalBase(IAgent<TAction, TGoal> agent)
         {
             _agent = agent;
+            _effects = InitEffects();
         }
 
         public abstract float GetPriority();
@@ -21,7 +23,20 @@ namespace BlueGOAP
         /// <summary>
         /// 获取目标对状态的影响
         /// </summary>
-        public abstract IState GetEffects();
+        public IState GetEffects()
+        {
+            return _effects;
+        }
+
+        protected abstract IState InitEffects();
+
+        /// <summary>
+        /// 是否已经实现目标
+        /// </summary>
+        public virtual bool IsGoalComplete()
+        {
+            return _agent.AgentState.ContainState(_effects);
+        }
 
         /// <summary>
         /// 获取代理状态的值
@@ -29,15 +44,10 @@ namespace BlueGOAP
         /// <typeparam name="Tkey"></typeparam>
         /// <param name="key"></param>
         /// <returns></returns>
-        protected bool GetAgentStateValue<Tkey>(Tkey key)
+        protected bool GetAgentState<Tkey>(Tkey key)
         {
-            return _agent.AgentState.GetValue(key.ToString());
+            return _agent.AgentState.Get(key.ToString());
         }
-
-        /// <summary>
-        /// 是否已经实现目标
-        /// </summary>
-        public abstract bool IsGoalComplete();
 
         public void AddGoalActivateListener(Action<IGoal<TGoal>> onActivate)
         {
@@ -49,7 +59,7 @@ namespace BlueGOAP
             _onInactivate = onInactivate;
         }
 
-        public void Update()
+        public void UpdateData()
         {
             DebugMsg.Log("----"+Label+"激活条件：" + ActiveCondition());
 

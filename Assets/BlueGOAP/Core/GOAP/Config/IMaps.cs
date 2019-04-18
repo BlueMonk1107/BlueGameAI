@@ -21,11 +21,13 @@ namespace BlueGOAP
         private Dictionary<TAction, IActionHandler<TAction>> _actionHandlerDic;
         private Dictionary<TGoal, IGoal<TGoal>> _goalsDic;
         protected IAgent<ActionEnum, GoalEnum> _agent;
-        private Dictionary<string, object> _gameData; 
+        private Dictionary<string, object> _gameData;
+        private ObjectPool _pool;
 
         public MapsBase(IAgent<ActionEnum, GoalEnum> agent)
         {
             _agent = agent;
+            _pool = ObjectPool.Instance;
             _actionHandlerDic = new Dictionary<TAction, IActionHandler<TAction>>();
             _goalsDic = new Dictionary<TGoal, IGoal<TGoal>>();
             _gameData = new Dictionary<string, object>();
@@ -47,30 +49,6 @@ namespace BlueGOAP
         /// </summary>
         protected abstract void InitGameData();
 
-        protected void AddAction(IActionHandler<TAction> handler)
-        {
-            if (!_actionHandlerDic.ContainsKey(handler.Label))
-            {
-                _actionHandlerDic.Add(handler.Label, handler);
-            }
-            else
-            {
-                DebugMsg.LogError("Action Label name:"+ handler.Label+" is already in cache");
-            }
-        }
-
-        protected void AddGoal(IGoal<TGoal> goal)
-        {
-            if (!_goalsDic.ContainsKey(goal.Label))
-            {
-                _goalsDic.Add(goal.Label,goal);
-            }
-            else
-            {
-                DebugMsg.LogError("Goal Label name:" + goal.Label + " is already in cache");
-            }
-        }
-
         /// <summary>
         /// 获取动作数据
         /// </summary>
@@ -78,11 +56,11 @@ namespace BlueGOAP
         /// <returns></returns>
         public IActionHandler<TAction> GetActionHandler(TAction actionLabel)
         {
-            IActionHandler<TAction> map;
-            _actionHandlerDic.TryGetValue(actionLabel, out map);
-            if(map == null)
+            IActionHandler<TAction> handler;
+            _actionHandlerDic.TryGetValue(actionLabel, out handler);
+            if(handler == null)
                 DebugMsg.LogError("action:"+ actionLabel+" not init");
-            return map;
+            return handler;
         }
         /// <summary>
         /// 获取目标数据
@@ -113,6 +91,37 @@ namespace BlueGOAP
             {
                 DebugMsg.LogError("can not find key name is "+ key);
                 return null;
+            }
+        }
+
+        protected void AddAction<THandler, UAction>()
+         where THandler : class, IActionHandler<TAction>
+         where UAction : class, IAction<TAction>
+        {
+            UAction action = _pool.Spwan<UAction>(_agent);
+            THandler handler = _pool.Spwan<THandler>(_agent, action);
+
+            if (!_actionHandlerDic.ContainsKey(handler.Label))
+            {
+                _actionHandlerDic.Add(handler.Label, handler);
+            }
+            else
+            {
+                DebugMsg.LogError("发现具有重复标签的Handler，标签为：" + handler.Label);
+            }
+        }
+
+        protected void AddGoal<UGoal>()
+             where UGoal : class, IGoal<TGoal>
+        {
+            UGoal goal = _pool.Spwan<UGoal>(_agent);
+            if (!_goalsDic.ContainsKey(goal.Label))
+            {
+                _goalsDic.Add(goal.Label, goal);
+            }
+            else
+            {
+                DebugMsg.LogError("发现具有相同目标的Goal，标签为：" + goal.Label);
             }
         }
     }

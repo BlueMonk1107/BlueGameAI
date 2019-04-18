@@ -5,7 +5,7 @@ namespace BlueGOAPTest
 {
     public class Root : MonoBehaviour
     {
-        public Agent<ActionEnum, GoalEnum> Agent { get; private set; }
+        public IAgent<ActionEnum, GoalEnum> Agent { get; private set; }
 
         public void Start()
         {

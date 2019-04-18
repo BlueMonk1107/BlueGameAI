@@ -18,6 +18,11 @@ namespace BlueGOAPTest
             AddHandler(ActionEnum.ATTACK_IDLE);
         }
 
+        protected override void InitMutilActionHandlers()
+        {
+            AddMutilActionHandler(ActionEnum.LOOK_AT);
+        }
+
         public override ActionEnum GetDefaultActionLabel()
         {
             return ActionEnum.ALERT;

@@ -48,18 +48,6 @@ namespace BlueGOAP
             }
         }
 
-        private void SortGoalList()
-        {
-            _activeGoals = _activeGoals.OrderByDescending(u => u.GetPriority()).ToList();
-
-            DebugMsg.Log("-----------active goal-----------");
-            foreach (IGoal<TGoal> goal in _activeGoals)
-            {
-                DebugMsg.Log(goal.Label+" 优先级："+ goal.GetPriority());
-            }
-            DebugMsg.Log("---------------------------------");
-        }
-
         public void RemoveGoal(TGoal goalLabel)
         {
             _goalsDic.Remove(goalLabel);
@@ -79,7 +67,15 @@ namespace BlueGOAP
         public IGoal<TGoal> FindGoal()
         {
             //查找优先级最大的那个
-            SortGoalList();
+            _activeGoals = _activeGoals.OrderByDescending(u => u.GetPriority()).ToList();
+
+            DebugMsg.Log("-----------active goal-----------");
+            foreach (IGoal<TGoal> goal in _activeGoals)
+            {
+                DebugMsg.Log(goal.Label + " 优先级：" + goal.GetPriority());
+            }
+            DebugMsg.Log("---------------------------------");
+
             if (_activeGoals.Count > 0)
             {
                 return _activeGoals[0];
@@ -101,7 +97,7 @@ namespace BlueGOAP
         {
             foreach (KeyValuePair<TGoal, IGoal<TGoal>> goal in _goalsDic)
             {
-                goal.Value.Update();
+                goal.Value.UpdateData();
             }
         }
         //更新CurrentGoal对象

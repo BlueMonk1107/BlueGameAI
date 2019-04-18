@@ -18,7 +18,7 @@ namespace BlueGOAP
             _dataTable = new Dictionary<string, bool>();
         }
 
-        public void SetState(string key, bool value)
+        public void Set(string key, bool value)
         {
             if (_dataTable.ContainsKey(key) && _dataTable[key] != value)
             {
@@ -49,29 +49,30 @@ namespace BlueGOAP
             {
                 if (otherState.ContainKey(entry.Key))
                 {
-                    data.SetState(entry.Key, _dataTable[entry.Key]);
+                    data.Set(entry.Key, entry.Value);
                 }
             }
 
             return data;
         }
 
-        public IState InversionValue()
+        public IState InversionValue() 
         {
             IState state = new State();
-            foreach (string key in GetKeys())
+            foreach (KeyValuePair<string, bool> pair in _dataTable)
             {
-                state.SetState(key, !_dataTable[key]);
+                state.Set(pair.Key, !pair.Value);
             }
 
             return state;
         }
 
-        public bool GetValue(string key)
+        public bool Get(string key)
         {
-            if (key == null)
+            if (!_dataTable.ContainsKey(key))
             {
-                DebugMsg.Log("state key can not be null!");
+                DebugMsg.LogError("state not contain the key:" + key);
+                return false;
             }
             return _dataTable[key];
         }
@@ -80,19 +81,19 @@ namespace BlueGOAP
         {
             foreach (string key in otherState.GetKeys())
             {
-                DebugMsg.Log("otherState key:"+ key+"   "+ otherState.GetValue(key));
+                DebugMsg.Log("otherState key:"+ key+"   "+ otherState.Get(key));
             }
             foreach (var key in otherState.GetKeys())
             {
                 if (ContainKey(key))
                 {
-                    DebugMsg.Log("key  " + key + "   当前状态的值  " + _dataTable[key] + "  另一状态的值 " + otherState.GetValue(key));
+                    DebugMsg.Log("key  " + key + "   当前状态的值  " + _dataTable[key] + "  另一状态的值 " + otherState.Get(key));
                 }
             }
 
             foreach (var key in otherState.GetKeys())
             {
-                if (!ContainKey(key) || _dataTable[key] != otherState.GetValue(key))
+                if (!ContainKey(key) || _dataTable[key] != otherState.Get(key))
                 {
                     return false;
                 }
@@ -106,7 +107,7 @@ namespace BlueGOAP
             List<string> keys = new List<string>();
             foreach (var key in otherState.GetKeys())
             {
-                if (!_dataTable.ContainsKey(key) || otherState.GetValue(key) != _dataTable[key])
+                if (!_dataTable.ContainsKey(key) || otherState.Get(key) != _dataTable[key])
                 {
                     keys.Add(key);
                 }
@@ -115,19 +116,24 @@ namespace BlueGOAP
             return keys;
         }
 
-        public void SetKeys(IState agentState, IState otherState)
+        public ICollection<string> GetNotExistKeys(IState otherState)
         {
+            List<string> keys = new List<string>();
             foreach (var key in otherState.GetKeys())
             {
-                SetState(key, agentState.GetValue(key));
+                if (!_dataTable.ContainsKey(key))
+                {
+                    keys.Add(key);
+                }
             }
+            return keys;
         }
 
-        public void SetData(IState otherState)
+        public void Set(IState otherState)
         {
             foreach (var key in otherState.GetKeys())
             {
-                SetState(key, otherState.GetValue(key));
+                Set(key, otherState.Get(key));
             }
         }
 
@@ -139,6 +145,12 @@ namespace BlueGOAP
         public ICollection<string> GetKeys()
         {
             return _dataTable.Keys;
+        }
+
+        public void Copy(IState otherState)
+        {
+            Clear();
+            Set(otherState);
         }
 
         public void Clear()
@@ -169,14 +181,14 @@ namespace BlueGOAP
 
         }
 
-        public void SetState(TKey key, bool value)
+        public void Set(TKey key, bool value)
         {
-            base.SetState(key.ToString(), value);
+            base.Set(key.ToString(), value);
         }
 
-        public bool GetValue(TKey key)
+        public bool Get(TKey key)
         {
-            return base.GetValue(key.ToString());
+            return base.Get(key.ToString());
         }
 
         public bool ContainKey(TKey key)

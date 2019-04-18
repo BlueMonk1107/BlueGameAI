@@ -29,7 +29,7 @@ namespace BlueGOAP
                 }
                 else
                 {
-                    return _currentActionHandler.IsComplete && _plan.Count == 0;
+                    return _currentActionHandler.ExcuteState == ActionExcuteState.EXIT && _plan.Count == 0;
                 }
             }
         }
@@ -60,10 +60,9 @@ namespace BlueGOAP
             }
             else
             {
-                TAction label = _plan.Dequeue().Label;
-                _currentActionHandler = _actionManager.GetHandler(label);
-                DebugMsg.Log("----当前执行动作:"+ label);
-                _actionManager.ChangeCurrentAction(label);
+                _currentActionHandler = _plan.Dequeue();
+                DebugMsg.Log("----当前执行动作:"+ _currentActionHandler.Label);
+                _actionManager.ExcuteNewState(_currentActionHandler.Label);
             }
         }
 

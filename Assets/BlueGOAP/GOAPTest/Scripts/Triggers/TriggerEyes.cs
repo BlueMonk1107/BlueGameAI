@@ -36,7 +36,7 @@ namespace BlueGOAPTest
         protected override IState InitEffects()
         {
             State<KeyNameEnum> effects = new State<KeyNameEnum>();
-            effects.SetState(KeyNameEnum.FIND_ENEMY, true);
+            effects.Set(KeyNameEnum.FIND_ENEMY, true);
             return effects;
         }
     }

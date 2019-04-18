@@ -1,19 +1,19 @@
-
+ï»¿
 
 namespace BlueGOAP
 {
     /// <summary>
-    /// ´¥·¢Æ÷½Ó¿Ú
-    /// ÓÃÓÚÏìÓ¦»·¾³¶ÔAIµÄÓ°Ïì
+    /// è§¦å‘å™¨æ¥å£
+    /// ç”¨äºå“åº”ç¯å¢ƒå¯¹AIçš„å½±å“
     /// </summary>
     public interface ITrigger
     {
         /// <summary>
-        /// ÊÇ·ñ´¥·¢
+        /// æ˜¯å¦è§¦å‘
         /// </summary>
         bool IsTrigger { get; set; }
         /// <summary>
-        /// Ö¡º¯Êı
+        /// å¸§å‡½æ•°
         /// </summary>
         void FrameFun();
     }
@@ -33,12 +33,12 @@ namespace BlueGOAP
         {
             if (IsTrigger)
             {
-                _agent.AgentState.SetData(_effects);
+                _agent.AgentState.Set(_effects);
             }
         }
 
         /// <summary>
-        /// ÅĞ¶ÏÊÇ·ñÂú×ã´¥·¢Ìõ¼ş
+        /// åˆ¤æ–­æ˜¯å¦æ»¡è¶³è§¦å‘æ¡ä»¶
         /// </summary>
         public abstract bool IsTrigger { get; set; }
 

@@ -48,7 +48,7 @@ namespace BlueGOAP
         /// 改变当前执行的动作
         /// </summary>
         /// <param name="actionLabel"></param>
-        void ChangeCurrentAction(TAction actionLabel);
+        void ExcuteNewState(TAction actionLabel);
         /// <summary>
         /// 添加动作完成的监听
         /// </summary>

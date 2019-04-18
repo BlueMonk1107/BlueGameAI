@@ -15,7 +15,7 @@ namespace BlueGOAP
         public TreeNode<TAction> ParentNode { get; set; }
 
         public IActionHandler<TAction> ActionHandler { get; private set; }
-        public IState CurrentState { get;  set; }
+        public IState CurrentState { get; set; }
         public IState GoalState { get; set; }
 
         public int Cost { get; set; }
@@ -26,8 +26,14 @@ namespace BlueGOAP
             ActionHandler = handler;
             Cost = 0;
             ParentNode = null;
-            CurrentState = new State();
-            GoalState = new State();
+            CurrentState = CurrentState.CreateNew();
+            GoalState = CurrentState.CreateNew();
+        }
+
+        public void CopyState(TreeNode<TAction> otherNode)
+        {
+            CurrentState.Copy(otherNode.CurrentState);
+            GoalState.Copy(otherNode.GoalState);
         }
 
         public static void ResetID()

@@ -4,7 +4,7 @@ using BlueGOAP;
 
 namespace BlueGOAPTest
 {
-    public class CustomAgent : Agent<ActionEnum, GoalEnum>
+    public class CustomAgent : AgentBase<ActionEnum, GoalEnum>
     {
         public CustomAgent(): base() { }
 
@@ -14,10 +14,10 @@ namespace BlueGOAPTest
 
             foreach (KeyNameEnum keyNameEnum in Enum.GetValues(typeof(KeyNameEnum)))
             {
-                effects.SetState(keyNameEnum, false);
+                effects.Set(keyNameEnum, false);
             }
 
-            effects.SetState(KeyNameEnum.IDLE,true);
+            effects.Set(KeyNameEnum.IDLE,true);
 
             return effects;
         }

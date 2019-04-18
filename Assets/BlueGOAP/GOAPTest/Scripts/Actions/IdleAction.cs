@@ -17,9 +17,9 @@ namespace BlueGOAPTest
         protected override IState InitPreconditions()
         {
             State<KeyNameEnum> effects = new State<KeyNameEnum>();
-            effects.SetState(KeyNameEnum.FIND_ENEMY, false);
-            effects.SetState(KeyNameEnum.ATTACK, false);
-            effects.SetState(KeyNameEnum.MOVE, false);
+            effects.Set(KeyNameEnum.FIND_ENEMY, false);
+            effects.Set(KeyNameEnum.ATTACK, false);
+            effects.Set(KeyNameEnum.MOVE, false);
             return effects;
         }
 

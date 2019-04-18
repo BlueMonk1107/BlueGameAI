@@ -16,7 +16,7 @@ namespace BlueGOAP
             get { return Action.Label; }
         }
 
-        public bool IsComplete { get; private set; }
+        public ActionExcuteState ExcuteState { get; private set; }
 
         protected IAgent<TAction, TGoal> _agent;
         private IAction<ActionEnum> action;
@@ -26,22 +26,23 @@ namespace BlueGOAP
         {
             _agent = agent;
             Action = action;
-            IsComplete = false;
+            ExcuteState = ActionExcuteState.INIT;
+            _onFinishAction = null;
         }
 
         private void SetAgentData(IState state)
         {
-            _agent.AgentState.SetData(state);
+            _agent.AgentState.Set(state);
         }
 
         protected void SetAgentState<TKey>(TKey key,bool value)
         {
-            _agent.AgentState.SetState(key.ToString(),value);
+            _agent.AgentState.Set(key.ToString(),value);
         }
 
         protected void OnComplete()
         {
-            IsComplete = true;
+           Exit();
 
             if (_onFinishAction != null)
                 _onFinishAction();
@@ -56,24 +57,24 @@ namespace BlueGOAP
             return Action.VerifyPreconditions();
         }
 
-        public void AddFinishAction(Action onFinishAction)
+        public void AddFinishCallBack(Action onFinishAction)
         {
             _onFinishAction = onFinishAction;
         }
 
         public virtual void Enter()
         {
-            IsComplete = false;
+            ExcuteState = ActionExcuteState.ENTER;
         }
 
         public virtual void Execute()
         {
-
+            ExcuteState = ActionExcuteState.EXCUTE;
         }
 
         public virtual void Exit()
         {
-            
+            ExcuteState = ActionExcuteState.EXIT;
         }
 
     }

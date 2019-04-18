@@ -1,7 +1,7 @@
 ﻿
 namespace BlueGOAP
 {
-    public abstract class Agent<TAction, TGoal> : IAgent<TAction, TGoal>
+    public abstract class AgentBase<TAction, TGoal> : IAgent<TAction, TGoal>
         where TAction : struct
         where TGoal : struct
     {
@@ -13,7 +13,7 @@ namespace BlueGOAP
 
         private ITriggerManager _triggerManager;
 
-        public Agent()
+        public AgentBase()
         {
             DebugMsgBase.Instance = InitDebugMsg();
             AgentState = InitAgentState();
@@ -24,6 +24,19 @@ namespace BlueGOAP
             Performer = new Performer<TAction, TGoal>(this);
             
             AgentState.AddStateChangeListener(UpdateData);
+
+            JudgeException(Maps, "Maps");
+            JudgeException(ActionManager, "ActionManager");
+            JudgeException(GoalManager, "GoalManager");
+            JudgeException(_triggerManager, "_triggerManager");
+        }
+
+        private void JudgeException(object obj, string name)
+        {
+            if (obj == null)
+            {
+                DebugMsg.LogError("代理中" + name + "对象为空,请在代理子类中初始化该对象");
+            }
         }
 
         protected abstract IState InitAgentState();

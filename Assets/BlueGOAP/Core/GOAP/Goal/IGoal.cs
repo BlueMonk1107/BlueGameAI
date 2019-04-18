@@ -34,7 +34,6 @@ namespace BlueGOAP
         /// </summary>
         /// <param name="onInactivate"></param>
         void AddGoalInactivateListener(Action<IGoal<TGoal>> onInactivate);
-
-        void Update();
+        void UpdateData();
     }
 }
