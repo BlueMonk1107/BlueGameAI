@@ -41,7 +41,7 @@ namespace BlueGOAP
 
         protected void OnComplete()
         {
-           Exit();
+            ExcuteState = ActionExcuteState.EXIT;
 
             if (_onFinishAction != null)
                 _onFinishAction();
@@ -73,7 +73,10 @@ namespace BlueGOAP
 
         public virtual void Exit()
         {
-            ExcuteState = ActionExcuteState.EXIT;
+            if (ExcuteState != ActionExcuteState.EXIT)
+            {
+                OnComplete();
+            }
         }
 
     }

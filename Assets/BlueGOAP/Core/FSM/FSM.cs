@@ -21,6 +21,10 @@ namespace BlueGOAP
         /// 更新动作
         /// </summary>
         void Execute();
+        /// <summary>
+        /// 退出动作
+        /// </summary>
+        void Exit();
     }
 
     public interface IFSM<TLabel>
@@ -60,7 +64,7 @@ namespace BlueGOAP
     {
         private readonly Dictionary<TLabel, IFsmState<TLabel>> _stateDic;
         private IFsmState<TLabel> _currentState;
-
+        private IFsmState<TLabel> _previousState;
         public FSM()
         {
             _stateDic = new Dictionary<TLabel, IFsmState<TLabel>>();
@@ -83,7 +87,10 @@ namespace BlueGOAP
             
             _currentState = _stateDic[newState];
 
-            if(_currentState != null)
+            if(_previousState != null)
+                _previousState.Exit();
+
+            if (_currentState != null)
                 _currentState.Enter();
         }
         
