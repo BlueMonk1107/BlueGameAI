@@ -1,6 +1,5 @@
 ﻿
 using System;
-using BlueGOAPTest;
 
 namespace BlueGOAP
 {
@@ -19,7 +18,7 @@ namespace BlueGOAP
         public ActionExcuteState ExcuteState { get; private set; }
 
         protected IAgent<TAction, TGoal> _agent;
-        private IAction<ActionEnum> action;
+        private IAction<TAction> action;
         protected System.Action _onFinishAction;
 
         public ActionHandlerBase(IAgent<TAction, TGoal> agent, IAction<TAction> action)

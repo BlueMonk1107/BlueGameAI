@@ -1,7 +1,5 @@
 ﻿
-using System;
 using System.Collections.Generic;
-using BlueGOAPTest;
 
 namespace BlueGOAP
 {
@@ -20,11 +18,11 @@ namespace BlueGOAP
     {
         private Dictionary<TAction, IActionHandler<TAction>> _actionHandlerDic;
         private Dictionary<TGoal, IGoal<TGoal>> _goalsDic;
-        protected IAgent<ActionEnum, GoalEnum> _agent;
+        protected IAgent<TAction, TGoal> _agent;
         private Dictionary<string, object> _gameData;
         private ObjectPool _pool;
 
-        public MapsBase(IAgent<ActionEnum, GoalEnum> agent)
+        public MapsBase(IAgent<TAction, TGoal> agent)
         {
             _agent = agent;
             _pool = ObjectPool.Instance;
