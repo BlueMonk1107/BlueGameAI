@@ -20,6 +20,10 @@ namespace BlueGOAP
         protected IAgent<TAction, TGoal> _agent;
         private IAction<TAction> action;
         protected System.Action _onFinishAction;
+        /// <summary>
+        /// 是否需要重置先置条件（就是先置条件全部取反）默认为true
+        /// </summary>
+        protected bool IsNeedResetPreconditions;
 
         public ActionHandlerBase(IAgent<TAction, TGoal> agent, IAction<TAction> action)
         {
@@ -27,6 +31,7 @@ namespace BlueGOAP
             Action = action;
             ExcuteState = ActionExcuteState.INIT;
             _onFinishAction = null;
+            IsNeedResetPreconditions = true;
         }
 
         private void SetAgentData(IState state)
@@ -47,7 +52,9 @@ namespace BlueGOAP
                 _onFinishAction();
 
             SetAgentData(Action.Effects);
-            SetAgentData(Action.Preconditions.InversionValue());
+
+            if(IsNeedResetPreconditions)
+                SetAgentData(Action.Preconditions.InversionValue());
         }
 
         public bool CanPerformAction()

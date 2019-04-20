@@ -7,6 +7,7 @@ namespace BlueGOAPTest
     {
         public IdleHandler(IAgent<ActionEnum, GoalEnum> agent, IAction<ActionEnum> action) : base(agent, action)
         {
+            IsNeedResetPreconditions = false;
         }
 
         public override void Enter()
