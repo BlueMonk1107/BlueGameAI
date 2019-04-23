@@ -25,6 +25,7 @@ namespace BlueGOAPTest
         {
             State<KeyNameEnum> state = new State<KeyNameEnum>();
             state.Set(KeyNameEnum.NEAR_ENEMY, true);
+            state.Set(KeyNameEnum.MOVE, false);
             return state;
         }
     }
