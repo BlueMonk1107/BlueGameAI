@@ -24,7 +24,7 @@ namespace BlueGOAPTest
         protected override IState InitEffects()
         {
             State<KeyNameEnum> state = new State<KeyNameEnum>();
-            state.Set(KeyNameEnum.MOVE, true);
+            state.Set(KeyNameEnum.CAN_MOVE, true);
             state.Set(KeyNameEnum.ATTACK_IDLE, false);
             return state;
         }

@@ -18,8 +18,8 @@ namespace BlueGOAPTest
         {
             State<KeyNameEnum> state = new State<KeyNameEnum>();
             state.Set(KeyNameEnum.FIND_ENEMY, false);
-            state.Set(KeyNameEnum.ATTACK, false);
-            state.Set(KeyNameEnum.MOVE, false);
+            state.Set(KeyNameEnum.CAN_ATTACK, false);
+            state.Set(KeyNameEnum.CAN_MOVE, false);
             return state;
         }
 

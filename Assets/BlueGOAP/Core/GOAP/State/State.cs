@@ -45,7 +45,7 @@ namespace BlueGOAP
             _onChange = onChange;
         }
 
-        public IState GetSameData(IState otherState)
+        public IState GetSameKeyData(IState otherState)
         {
             IState data = new State();
             foreach (var entry in _dataTable)

@@ -40,10 +40,6 @@ namespace BlueGOAPTest
         /// </summary>
         FIND_ENEMY,
         /// <summary>
-        /// 巡逻
-        /// </summary>
-        GO_ON_PATROL,
-        /// <summary>
         /// 看向敌人
         /// </summary>
         LOOK_AT_ENEMY,
@@ -58,7 +54,7 @@ namespace BlueGOAPTest
         /// <summary>
         /// 移动
         /// </summary>
-        MOVE,
+        CAN_MOVE,
         /// <summary>
         /// 临近敌人
         /// </summary>
@@ -66,7 +62,7 @@ namespace BlueGOAPTest
         /// <summary>
         /// 攻击
         /// </summary>
-        ATTACK,
+        CAN_ATTACK,
         /// <summary>
         /// 受伤
         /// </summary>

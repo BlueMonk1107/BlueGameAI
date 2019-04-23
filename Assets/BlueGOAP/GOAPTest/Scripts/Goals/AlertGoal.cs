@@ -22,7 +22,7 @@ namespace BlueGOAPTest
         protected override IState InitEffects()
         {
             State<KeyNameEnum> state = new State<KeyNameEnum>();
-            state.Set(KeyNameEnum.MOVE, true);
+            state.Set(KeyNameEnum.CAN_MOVE, true);
             return state;
         }
 
@@ -30,7 +30,7 @@ namespace BlueGOAPTest
         {
             State<KeyNameEnum> state = new State<KeyNameEnum>();
             state.Set(KeyNameEnum.FIND_ENEMY, true);
-            state.Set(KeyNameEnum.MOVE, false);
+            state.Set(KeyNameEnum.CAN_MOVE, false);
             return state;
         }
     }

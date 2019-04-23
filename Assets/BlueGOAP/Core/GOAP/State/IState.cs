@@ -30,7 +30,7 @@ namespace BlueGOAP
         /// <summary>
         /// 获取两个State同时包含的键值及当前状态键值对应的数据
         /// </summary>
-        IState GetSameData(IState otherState);
+        IState GetSameKeyData(IState otherState);
         /// <summary>
         /// 反转当前state所有的value值
         /// </summary>

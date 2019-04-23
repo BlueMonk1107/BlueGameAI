@@ -17,7 +17,7 @@ namespace BlueGOAPTest
         protected override IState InitPreconditions()
         {
             State<KeyNameEnum> state = new State<KeyNameEnum>();
-            state.Set(KeyNameEnum.MOVE, true);
+            state.Set(KeyNameEnum.CAN_MOVE, true);
             return state;
         }
 
@@ -25,7 +25,7 @@ namespace BlueGOAPTest
         {
             State<KeyNameEnum> state = new State<KeyNameEnum>();
             state.Set(KeyNameEnum.NEAR_ENEMY, true);
-            state.Set(KeyNameEnum.MOVE, false);
+            state.Set(KeyNameEnum.CAN_MOVE, false);
             return state;
         }
     }
