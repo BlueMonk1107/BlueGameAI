@@ -65,6 +65,7 @@ namespace BlueGOAP
         private readonly Dictionary<TLabel, IFsmState<TLabel>> _stateDic;
         private IFsmState<TLabel> _currentState;
         private IFsmState<TLabel> _previousState;
+
         public FSM()
         {
             _stateDic = new Dictionary<TLabel, IFsmState<TLabel>>();
@@ -84,10 +85,10 @@ namespace BlueGOAP
                 DebugMsg.LogError("状态机内不包含此状态对象:" + newState);
                 return;
             }
-            
+            _previousState = _currentState;
             _currentState = _stateDic[newState];
 
-            if(_previousState != null)
+            if (_previousState != null)
                 _previousState.Exit();
 
             if (_currentState != null)

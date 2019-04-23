@@ -18,14 +18,8 @@ namespace BlueGOAP
             }
         }
 
-        private Dictionary<Type, List<object>> _activeDic;
-        private Dictionary<Type, List<object>> _inactiveDic;
-
-        public ObjectPool()
-        {
-             _activeDic = new Dictionary<Type, List<object>>();
-            _inactiveDic = new Dictionary<Type, List<object>>();
-        }
+        private Dictionary<Type, List<object>> _activeDic = new Dictionary<Type, List<object>>();
+        private Dictionary<Type, List<object>> _inactiveDic = new Dictionary<Type, List<object>>();
 
         public T Spwan<T>(params object[] args) where T : class 
         {

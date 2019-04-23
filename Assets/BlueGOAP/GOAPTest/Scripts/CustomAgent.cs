@@ -10,16 +10,16 @@ namespace BlueGOAPTest
 
         protected override IState InitAgentState()
         {
-            State<KeyNameEnum> effects = new State<KeyNameEnum>();
+            State<KeyNameEnum> state = new State<KeyNameEnum>();
 
             foreach (KeyNameEnum keyNameEnum in Enum.GetValues(typeof(KeyNameEnum)))
             {
-                effects.Set(keyNameEnum, false);
+                state.Set(keyNameEnum, false);
             }
 
-            effects.Set(KeyNameEnum.IDLE,true);
+            state.Set(KeyNameEnum.IDLE,true);
 
-            return effects;
+            return state;
         }
 
         protected override IMaps<ActionEnum, GoalEnum> InitMaps()

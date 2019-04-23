@@ -21,15 +21,16 @@ namespace BlueGOAPTest
 
         protected override IState InitEffects()
         {
-            State<KeyNameEnum> effects = new State<KeyNameEnum>();
-            effects.Set(KeyNameEnum.MOVE, true);
-            return effects;
+            State<KeyNameEnum> state = new State<KeyNameEnum>();
+            state.Set(KeyNameEnum.MOVE, true);
+            return state;
         }
 
-
-        protected override bool ActiveCondition()
+        protected override IState InitActiveCondition()
         {
-            return GetAgentState(KeyNameEnum.ATTACK_IDLE) == true;
+            State<KeyNameEnum> state = new State<KeyNameEnum>();
+            state.Set(KeyNameEnum.ATTACK_IDLE, true);
+            return state;
         }
     }
 }
