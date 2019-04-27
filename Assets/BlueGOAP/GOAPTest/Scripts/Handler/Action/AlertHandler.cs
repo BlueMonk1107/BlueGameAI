@@ -5,7 +5,7 @@ namespace BlueGOAPTest
 {
     public class AlertHandler : ActionHandlerBase<ActionEnum, GoalEnum>
     {
-        public AlertHandler(IAgent<ActionEnum, GoalEnum> agent, IAction<ActionEnum> action) : base(agent, action)
+        public AlertHandler(IAgent<ActionEnum, GoalEnum> agent, IMaps<ActionEnum, GoalEnum> maps, IAction<ActionEnum> action) : base(agent, maps, action)
         {
         }
 

@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace BlueGOAPTest
 {
-    public class LookAtHandler : ActionHandlerBase<ActionEnum,GoalEnum>
+    public class LookAtStateHandler : ActionHandlerBase<ActionEnum,GoalEnum>
     {
         private Transform _self, _enemy;
 
-        public LookAtHandler(IAgent<ActionEnum, GoalEnum> agent, IAction<ActionEnum> action) : base(agent, action)
+        public LookAtStateHandler(IAgent<ActionEnum, GoalEnum> agent, IMaps<ActionEnum, GoalEnum> maps, IAction<ActionEnum> action) : base(agent, maps, action)
         {
         }
 
@@ -29,5 +29,7 @@ namespace BlueGOAPTest
                 OnComplete();
             }
         }
+
+
     }
 }

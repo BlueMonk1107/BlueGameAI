@@ -12,6 +12,8 @@ namespace BlueGOAP
         IActionHandler<TAction> GetActionHandler(TAction actionLabel);
         IGoal<TGoal> GetGoal(TGoal goalLabel);
         void SetGameData<Tkey>(Tkey key,object value);
+        TClass GetGameData<Tkey, TClass>(Tkey key) where Tkey : struct where TClass : class;
+        TValue GetGameDataValue<Tkey, TValue>(Tkey key) where Tkey : struct where TValue : struct;
         object GetGameData<Tkey>(Tkey key);
     }
 
@@ -23,14 +25,15 @@ namespace BlueGOAP
         private Dictionary<string, object> _gameData;
         private ObjectPool _pool;
 
-        public MapsBase(IAgent<TAction, TGoal> agent)
+        public MapsBase(IAgent<TAction, TGoal> agent, 
+            Action<IAgent<TAction, TGoal>, IMaps<TAction, TGoal>> onInitGameData)
         {
             _agent = agent;
             _pool = ObjectPool.Instance;
             _actionHandlerDic = new Dictionary<TAction, IActionHandler<TAction>>();
             _goalsDic = new Dictionary<TGoal, IGoal<TGoal>>();
             _gameData = new Dictionary<string, object>();
-            InitGameData();
+            InitGameData(onInitGameData);
             InitActinMaps();
             InitGoalMaps();
         }
@@ -43,10 +46,15 @@ namespace BlueGOAP
         /// 在此函数内手动填写对应的目标数据
         /// </summary>
         protected abstract void InitGoalMaps();
+
         /// <summary>
         /// 初始化游戏内数据
         /// </summary>
-        protected abstract void InitGameData();
+        protected virtual void InitGameData(Action<IAgent<TAction, TGoal>, IMaps<TAction, TGoal>> onInitGameData)
+        {
+            if (onInitGameData != null)
+                onInitGameData(_agent,this);
+        }
 
         /// <summary>
         /// 获取动作数据
@@ -80,6 +88,30 @@ namespace BlueGOAP
             _gameData[key.ToString()] = value;
         }
 
+        public TClass GetGameData<Tkey, TClass>(Tkey key) where Tkey : struct where TClass : class
+        {
+            TClass c = GetGameData(key) as TClass;
+            if (c == null)
+            {
+                DebugMsg.LogError("无法转换类型");
+            }
+
+            return c;
+        }
+
+        public TValue GetGameDataValue<Tkey, TValue>(Tkey key) where Tkey : struct where TValue : struct
+        {
+            try
+            {
+                return (TValue)GetGameData(key);
+            }
+            catch (Exception)
+            {
+                DebugMsg.LogError("无法转换类型");
+                return default(TValue);
+            }
+        }
+
         public object GetGameData<Tkey>(Tkey key)
         {
             if (_gameData.ContainsKey(key.ToString()))
@@ -88,7 +120,7 @@ namespace BlueGOAP
             }
             else
             {
-                DebugMsg.LogError("can not find key name is "+ key);
+                DebugMsg.LogError("can not find key name is " + key);
                 return null;
             }
         }
@@ -98,7 +130,7 @@ namespace BlueGOAP
          where UAction : class, IAction<TAction>
         {
             UAction action = _pool.Spwan<UAction>(_agent);
-            THandler handler = _pool.Spwan<THandler>(_agent, action);
+            THandler handler = _pool.Spwan<THandler>(_agent, this, action);
 
             if (!_actionHandlerDic.ContainsKey(handler.Label))
             {

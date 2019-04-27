@@ -25,7 +25,7 @@ namespace BlueGOAP
         /// <summary>
         /// 添加处理类对象
         /// </summary>
-        void AddHandler(TAction actionLabel);
+        void AddActionHandler(TAction actionLabel);
         /// <summary>
         /// 移除处理类对象
         /// </summary>

@@ -3,7 +3,7 @@ using BlueGOAP;
 
 namespace BlueGOAPTest
 {
-    public class LookAtAction: ActionBase<ActionEnum,GoalEnum>
+    public class LookAtActionState: ActionBase<ActionEnum,GoalEnum>
     {
 
         public override ActionEnum Label { get {return ActionEnum.LOOK_AT;} }
@@ -11,7 +11,7 @@ namespace BlueGOAPTest
         public override int Priority { get; }
         public override bool CanInterruptiblePlan { get; }
 
-        public LookAtAction(IAgent<ActionEnum, GoalEnum> agent) : base(agent)
+        public LookAtActionState(IAgent<ActionEnum, GoalEnum> agent) : base(agent)
         {
         }
 

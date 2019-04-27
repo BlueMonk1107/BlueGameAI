@@ -6,7 +6,7 @@ namespace BlueGOAPTest
 {
     public class PlayerAgent : AgentBase<ActionEnum, GoalEnum>
     {
-        public PlayerAgent() : base() { }
+        public PlayerAgent() : base(null) { }
 
         protected override DebugMsgBase InitDebugMsg()
         {
@@ -29,7 +29,7 @@ namespace BlueGOAPTest
 
         protected override IMaps<ActionEnum, GoalEnum> InitMaps()
         {
-            return new PlayerMap(this);
+            return new PlayerMap(this,null);
         }
 
         protected override IActionManager<ActionEnum> InitActionManager()

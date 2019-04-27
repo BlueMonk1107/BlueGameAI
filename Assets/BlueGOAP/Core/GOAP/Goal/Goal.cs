@@ -74,7 +74,7 @@ namespace BlueGOAP
         /// 当前Goal的激活条件
         /// </summary>
         /// <returns></returns>
-        protected virtual bool ActiveCondition()
+        private bool ActiveCondition()
         {
             return _agent.AgentState.ContainState(_activeCondition);
         }

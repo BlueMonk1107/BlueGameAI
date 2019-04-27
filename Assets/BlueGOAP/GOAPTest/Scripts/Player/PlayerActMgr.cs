@@ -19,9 +19,9 @@ namespace BlueGOAPTest
             
         }
 
-        protected override void InitMutilActionHandlers()
+        protected override void InitActionStateHandlers()
         {
-            AddMutilActionHandler(ActionEnum.LOOK_AT);
+            AddActionStateHandler(ActionEnum.LOOK_AT);
         }
     }
 }

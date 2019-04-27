@@ -5,7 +5,7 @@ namespace BlueGOAPTest
 {
     public class AttackHandler  : ActionHandlerBase<ActionEnum, GoalEnum>
     {
-        public AttackHandler(IAgent<ActionEnum, GoalEnum> agent,IAction<ActionEnum> action) : base(agent,action)
+        public AttackHandler(IAgent<ActionEnum, GoalEnum> agent, IMaps<ActionEnum, GoalEnum> maps, IAction<ActionEnum> action) : base(agent, maps, action)
         {
         }
 
@@ -15,5 +15,7 @@ namespace BlueGOAPTest
             DebugMsg.Log("进入攻击状态");
             OnComplete();
         }
+
+      
     }
 }

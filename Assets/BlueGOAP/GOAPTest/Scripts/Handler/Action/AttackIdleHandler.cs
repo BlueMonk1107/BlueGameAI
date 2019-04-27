@@ -8,7 +8,7 @@ namespace BlueGOAPTest
     {
         private float _time;
 
-        public AttackIdleHandler(IAgent<ActionEnum, GoalEnum> agent, IAction<ActionEnum> action) : base(agent, action)
+        public AttackIdleHandler(IAgent<ActionEnum, GoalEnum> agent, IMaps<ActionEnum, GoalEnum> maps, IAction<ActionEnum> action) : base(agent, maps, action)
         {
         }
 
@@ -39,5 +39,7 @@ namespace BlueGOAPTest
             base.Exit();
             DebugMsg.Log("退出战斗待机状态");
         }
+
+      
     }
 }

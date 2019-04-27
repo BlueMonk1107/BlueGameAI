@@ -9,7 +9,8 @@ namespace BlueGOAPTest
         private Transform _self, _enemy;
         private CharacterController _controller;
         private float _speed = 4;
-        public MoveHandler(IAgent<ActionEnum, GoalEnum> agent, IAction<ActionEnum> action) : base(agent, action)
+
+        public MoveHandler(IAgent<ActionEnum, GoalEnum> agent, IMaps<ActionEnum, GoalEnum> maps, IAction<ActionEnum> action) : base(agent, maps, action)
         {
         }
 
@@ -41,5 +42,7 @@ namespace BlueGOAPTest
             base.Exit();
             DebugMsg.Log("退出移动状态");
         }
+
+
     }
 }

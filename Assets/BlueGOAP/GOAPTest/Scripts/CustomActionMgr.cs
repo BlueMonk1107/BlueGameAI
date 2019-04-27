@@ -11,16 +11,16 @@ namespace BlueGOAPTest
 
         protected override void InitActionHandlers()
         {
-            AddHandler(ActionEnum.ATTACK);
-            AddHandler(ActionEnum.ALERT);
-            AddHandler(ActionEnum.INJURE);
-            AddHandler(ActionEnum.MOVE);
-            AddHandler(ActionEnum.ATTACK_IDLE);
+            AddActionHandler(ActionEnum.ATTACK);
+            AddActionHandler(ActionEnum.ALERT);
+            AddActionHandler(ActionEnum.INJURE);
+            AddActionHandler(ActionEnum.MOVE);
+            AddActionHandler(ActionEnum.ATTACK_IDLE);
         }
 
-        protected override void InitMutilActionHandlers()
+        protected override void InitActionStateHandlers()
         {
-            AddMutilActionHandler(ActionEnum.LOOK_AT);
+            AddActionStateHandler(ActionEnum.LOOK_AT);
         }
 
         public override ActionEnum GetDefaultActionLabel()

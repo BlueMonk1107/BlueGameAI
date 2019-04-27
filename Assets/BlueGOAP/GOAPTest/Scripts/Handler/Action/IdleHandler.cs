@@ -5,7 +5,7 @@ namespace BlueGOAPTest
 {
     public class IdleHandler : ActionHandlerBase<ActionEnum, GoalEnum>
     {
-        public IdleHandler(IAgent<ActionEnum, GoalEnum> agent, IAction<ActionEnum> action) : base(agent, action)
+        public IdleHandler(IAgent<ActionEnum, GoalEnum> agent, IMaps<ActionEnum, GoalEnum> maps, IAction<ActionEnum> action) : base(agent, maps, action)
         {
         }
 
@@ -14,5 +14,7 @@ namespace BlueGOAPTest
             base.Enter();
             DebugMsg.Log("进入待机状态");
         }
+
+     
     }
 }

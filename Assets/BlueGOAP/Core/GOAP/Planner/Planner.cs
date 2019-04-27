@@ -146,8 +146,8 @@ namespace BlueGOAP
                 IAction<TAction> subAction = subNode.ActionHandler.Action;
                 //首先复制当前节点的状态
                 subNode.CopyState(currentNode);
-                //查找action的effects和goal中同时存在的键值，获取对应键值在GoalState中的数据
-                IState data = subNode.GoalState.GetSameKeyData(subAction.Effects);
+                //查找action的effects，和goal中也存在
+                IState data = subNode.GoalState.GetSameData(subAction.Effects);
                 //那么就把这个状态添加到节点的当前状态中
                 subNode.CurrentState.Set(data);
                 //把action的先决条件存在goalState中不存在的键值添加进去

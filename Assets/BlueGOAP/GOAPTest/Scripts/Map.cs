@@ -1,11 +1,12 @@
 ﻿
+using System;
 using BlueGOAP;
 
 namespace BlueGOAPTest
 {
     public class Map : MapsBase<ActionEnum, GoalEnum>
     {
-        public Map(IAgent<ActionEnum, GoalEnum> agent) : base(agent)
+        public Map(IAgent<ActionEnum, GoalEnum> agent, Action<IAgent<ActionEnum, GoalEnum>, IMaps<ActionEnum, GoalEnum>> onInitGameData) : base(agent, onInitGameData)
         {
         }
 
@@ -17,7 +18,7 @@ namespace BlueGOAPTest
             AddAction<AttackHandler, AttackAction>();
             AddAction<InjureHandler, InjureAction>();
             AddAction<MoveHandler, MoveAction>();
-            AddAction<LookAtHandler, LookAtAction>();
+            AddAction<LookAtStateHandler, LookAtActionState>();
         }
 
         protected override void InitGoalMaps()
@@ -28,8 +29,9 @@ namespace BlueGOAPTest
             AddGoal<InjureGoal>();
         }
 
-        protected override void InitGameData()
+        protected override void InitGameData(Action<IAgent<ActionEnum, GoalEnum>, IMaps<ActionEnum, GoalEnum>> onInitGameData)
         {
+            base.InitGameData(onInitGameData);
             SetGameData(DataName.SELF_TRANS, ObjectsInScene.Instance.Enemy);
             SetGameData(DataName.ENEMY_TRANS, ObjectsInScene.Instance.Player);
         }

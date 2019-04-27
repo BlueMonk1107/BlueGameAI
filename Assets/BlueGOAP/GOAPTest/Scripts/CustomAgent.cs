@@ -6,7 +6,7 @@ namespace BlueGOAPTest
 {
     public class CustomAgent : AgentBase<ActionEnum, GoalEnum>
     {
-        public CustomAgent(): base() { }
+        public CustomAgent(): base(null) { }
 
         protected override IState InitAgentState()
         {
@@ -24,7 +24,7 @@ namespace BlueGOAPTest
 
         protected override IMaps<ActionEnum, GoalEnum> InitMaps()
         {
-            return new Map(this);
+            return new Map(this,null);
         }
 
         protected override IActionManager<ActionEnum> InitActionManager()
