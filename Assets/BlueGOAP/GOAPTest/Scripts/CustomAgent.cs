@@ -8,6 +8,8 @@ namespace BlueGOAPTest
     {
         public CustomAgent(): base(null) { }
 
+        public override bool IsAgentOver { get { return false; } }
+
         protected override IState InitAgentState()
         {
             State<KeyNameEnum> state = new State<KeyNameEnum>();

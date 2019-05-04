@@ -15,6 +15,8 @@ namespace BlueGOAPTest
             _enemy = (Transform)agent.Maps.GetGameData(DataName.ENEMY_TRANS);
         }
 
+        public override int Priority { get; }
+
         public override bool IsTrigger
         {
             get

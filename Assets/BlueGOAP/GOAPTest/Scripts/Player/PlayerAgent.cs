@@ -13,6 +13,8 @@ namespace BlueGOAPTest
             return new CustomDebug();
         }
 
+        public override bool IsAgentOver { get { return false; } }
+
         protected override IState InitAgentState()
         {
             State<KeyNameEnum> state = new State<KeyNameEnum>();
