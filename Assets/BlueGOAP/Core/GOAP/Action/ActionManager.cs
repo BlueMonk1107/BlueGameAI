@@ -163,7 +163,7 @@ namespace BlueGOAP
         public void UpdateData()
         {
             JudgeInterruptibleHandler();
-            JudgeConformMutilAction();
+            JudgeConformActionState();
         }
         //判断是否有能够打断计划的动作执行
         private void JudgeInterruptibleHandler()
@@ -172,14 +172,14 @@ namespace BlueGOAP
             {
                 if (handler.CanPerformAction())
                 {
-                    DebugMsg.LogError(handler.Label + "打断计划");
+                    DebugMsg.Log(handler.Label + "打断计划");
                     _agent.Performer.Interruptible();
                     break;
                 }
             }
         }
         //判断是否有满足条件的可叠加动作
-        private void JudgeConformMutilAction()
+        private void JudgeConformActionState()
         {
             foreach (KeyValuePair<TAction, IActionHandler<TAction>> pair in _actionStateHandlers)
             {
